@@ -55,7 +55,7 @@ String MyWebServer::readIndexFile()
 }
 String MyWebServer::generateJSON()
 {
-    StaticJsonDocument<200> doc;
+    JsonDocument doc;
     doc["temperature"] = temp;
     doc["humidity"] = hum;
     doc["moisture"] = moist;

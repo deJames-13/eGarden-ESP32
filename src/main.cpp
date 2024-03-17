@@ -20,7 +20,7 @@ void setup()
 void loop()
 {
     // #########################################################
-    // SENSOR INPUTS
+    // SENSOR INPUTS        FIXME: Test sensor inputs
     // #########################################################
     float temperature = dhtSensor.getTemperature();
     float humidity = dhtSensor.getHumidity();
@@ -30,15 +30,15 @@ void loop()
     // #########################################################
 
     // #########################################################
-    // WEB SERVER
+    // WEB SERVER           FIXME: Test web server
     // Update sensor data on web server
     // #########################################################
     webServer.updateSensorData(temperature, humidity, moisture, waterLevel, waterValue);
     // #########################################################
 
     // #########################################################
-    // OlED INFO
-    // Update display
+    // OlED INFO DISPLAY    FIXME: Test OLED display
+    // Update display with sensor data
     // #########################################################
     oledDisplay.clearDisplay();
     oledDisplay.displayTemperature(temperature);

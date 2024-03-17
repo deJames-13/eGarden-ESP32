@@ -1,3 +1,4 @@
+// FIXME: Check code compatibility and errors
 #include "dht22.h"
 
 DHT22SENSOR::DHT22SENSOR() : dht(DHT_PIN, DHT22) {}

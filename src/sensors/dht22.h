@@ -3,8 +3,7 @@
 #define DHT22_H
 
 #include <DHT.h>
-
-#define DHT_PIN 2 // FIXME: Change pin number
+#include "pin_config.h"
 
 class DHT22SENSOR
 {

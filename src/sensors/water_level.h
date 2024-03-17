@@ -1,7 +1,7 @@
 #ifndef WATER_LEVEL_H
 #define WATER_LEVEL_H
 
-#define WATER_LEVEL_PIN 4 // FIXME: Change PIN
+#include "pin_config.h"
 
 class WaterLevel
 {
