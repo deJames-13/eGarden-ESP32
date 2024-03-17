@@ -1,6 +1,6 @@
 #include "oled.h"
 
-OLED::OLED() : display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET) {}
+OLED::OLED() : display(SCREEN_WIDTH, SCREEN_HEIGHT, &WIRE, OLED_RESET) {}
 
 void OLED::begin()
 {
