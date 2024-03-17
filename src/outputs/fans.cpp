@@ -3,6 +3,8 @@
 #include "pin_config.h"
 #include <Arduino.h>
 
+Fan::Fan() {}
+
 void Fan::begin()
 {
     pinMode(RELAY_PIN_FAN, OUTPUT);

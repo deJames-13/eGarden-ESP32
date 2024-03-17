@@ -3,6 +3,8 @@
 #include "pin_config.h"
 #include <Arduino.h>
 
+WaterValve::WaterValve() {}
+
 void WaterValve::begin()
 {
     pinMode(RELAY_PIN_VALVE, OUTPUT);

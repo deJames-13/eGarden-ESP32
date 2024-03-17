@@ -9,6 +9,8 @@ public:
     SoilMoisture();
     void begin();
     int getMoisture();
+    bool isTooDry();
+    bool isTooWet();
 };
 
 #endif

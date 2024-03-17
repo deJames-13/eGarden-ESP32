@@ -31,7 +31,8 @@ void OLED::displayTemperature(float temperature)
     display.print("Temperature:");
     display.setTextSize(2);
     display.setTextColor(SSD1306_WHITE);
-    display.println(temperature, 1);
+    display.print(temperature, 1);
+    display.println("°C");
 }
 
 void OLED::displayHumidity(float humidity)

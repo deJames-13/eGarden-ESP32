@@ -17,6 +17,7 @@ public:
     void begin();
     String getWaterLevel();
     int getSensorValue();
+    bool isEmptyOrLow();
 };
 
 // Threshold values

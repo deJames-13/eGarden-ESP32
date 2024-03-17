@@ -31,3 +31,13 @@ int WaterLevel::getSensorValue()
 {
     return analogRead(WATER_LEVEL_PIN);
 }
+
+bool WaterLevel::isEmptyOrLow()
+{
+    String waterLevel = getWaterLevel();
+    if (waterLevel == "Low" || waterLevel == "Empty")
+    {
+        return true;
+    }
+    return false;
+}
