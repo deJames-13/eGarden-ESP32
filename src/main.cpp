@@ -6,6 +6,12 @@ WaterLevel waterSensor;
 OLED oledDisplay;
 MyWebServer webServer;
 
+// FIXME: Network
+NetworkManager networkManager;
+
+// FIXME: Database
+DatabaseManager dbManager;
+
 void setup()
 {
     Serial.begin(9600);
@@ -14,6 +20,7 @@ void setup()
     soilSensor.begin();
     waterSensor.begin();
     oledDisplay.begin();
+    networkManager.connectToWiFi();
     webServer.begin();
 }
 

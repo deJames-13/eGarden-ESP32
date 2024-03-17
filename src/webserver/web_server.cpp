@@ -1,10 +1,10 @@
+// FIXME: TEST OUTPUT
 #include "web_server.h"
 
-MyWebServer::MyWebServer() {}
+MyWebServer::MyWebServer() : server(80) {}
 
 void MyWebServer::begin()
 {
-    networkManager.connectToWiFi();
     server.begin();
 
     // MAIN
