@@ -47,6 +47,13 @@ void loop()
     oledDisplay.displayWaterStatus(waterLevel, waterValue);
     oledDisplay.updateDisplay();
 
+    // #########################################################
+    // OUTPUT EVENTS        TODO: ADD OUTPUT ACTIONS
+    // Update what will happen to output components: buzzer, fan, valve
+    // #########################################################
+    // TODO: Add Code Here
+    // #########################################################
+
     // HANDLE CLIENT SERVER
     webServer.handleClient();
     delay(1000);
