@@ -10,10 +10,34 @@ void DHT22SENSOR::begin()
 
 float DHT22SENSOR::getTemperature()
 {
-    return dht.readTemperature();
+    sensors_event_t event;
+    dht.temperature().getEvent(&event);
+    if (isnan(event.temperature))
+    {
+        return NAN;
+    }
+    else
+    {
+        return event.temperature;
+    }
 }
 
 float DHT22SENSOR::getHumidity()
 {
-    return dht.readHumidity();
+    sensors_event_t event;
+    dht.humidity().getEvent(&event);
+    if (isnan(event.relative_humidity))
+    {
+        return NAN;
+    }
+    else
+    {
+        return event.relative_humidity;
+    }
+}
+
+bool DHT22SENSOR::isHot(float temperatureThreshold)
+{
+    float temperature = getTemperature();
+    return (temperature > temperatureThreshold);
 }

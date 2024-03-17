@@ -1,10 +1,10 @@
+// FIXME: TEST OUTPUT
 #include "web_server.h"
 
-MyWebServer::MyWebServer() {}
+MyWebServer::MyWebServer() : server(80) {}
 
 void MyWebServer::begin()
 {
-    networkManager.connectToWiFi();
     server.begin();
 
     // MAIN
@@ -37,7 +37,6 @@ String MyWebServer::generateHTML()
     html += "<p>Humidity: " + String(hum) + "%</p>";
     html += "<p>Soil Moisture: " + String(moist) + "</p>";
     html += "<p>Water Value: " + String(water) + "</p>";
-
     html += "</body></html>";
     return html;
 }

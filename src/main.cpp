@@ -1,10 +1,26 @@
 #include "includes.h"
 
+OLED oledDisplay;
+MyWebServer webServer;
+
+// FIXME: Network
+NetworkManager networkManager;
+
+// FIXME: Database
+DatabaseManager dbManager;
+
+// SENSORS
 DHT22SENSOR dhtSensor;
 SoilMoisture soilSensor;
 WaterLevel waterSensor;
-OLED oledDisplay;
-MyWebServer webServer;
+
+// OUTPUT
+Buzzer buzzer;
+Fan fan;
+WaterValve valve;
+void handleWatering(String waterLevel);
+void handleFan();
+void handleBuzzer();
 
 void setup()
 {
@@ -13,7 +29,13 @@ void setup()
     dhtSensor.begin();
     soilSensor.begin();
     waterSensor.begin();
+
+    buzzer.begin();
+    fan.begin();
+    valve.begin();
+
     oledDisplay.begin();
+    networkManager.connectToWiFi();
     webServer.begin();
 }
 
@@ -48,13 +70,60 @@ void loop()
     oledDisplay.updateDisplay();
 
     // #########################################################
-    // OUTPUT EVENTS        TODO: ADD OUTPUT ACTIONS
+    // OUTPUT EVENTS        FIXME: TEST EVENTS ON ACTUAL HARDWARE
     // Update what will happen to output components: buzzer, fan, valve
     // #########################################################
-    // TODO: Add Code Here
+    handleWatering(waterLevel);
+    handleFan();
+    handleBuzzer();
     // #########################################################
 
     // HANDLE CLIENT SERVER
     webServer.handleClient();
     delay(1000);
+}
+
+// #########################################################
+// ACTION EVENTS
+// #########################################################
+
+void handleWatering(String waterLevel)
+{
+    // FIXME: TEST LOGIC
+    if (soilSensor.isTooDry() && waterLevel != "LOW")
+    {
+        valve.open();
+    }
+    else if (soilSensor.isTooWet())
+    {
+        valve.close();
+    }
+}
+
+void handleFan()
+{
+    // FIXME: TEST LOGIC
+    const float temperatureThreshold = 30;
+    if (dhtSensor.isHot(temperatureThreshold))
+    {
+        fan.turnOn();
+    }
+    else
+    {
+        fan.turnOff();
+    }
+}
+
+void handleBuzzer()
+{
+    // FIXME: TEST LOGIC
+    if (waterSensor.isEmptyOrLow())
+    {
+        buzzer.buzzOnce();
+        buzzer.setBuzzState(true);
+    }
+    else
+    {
+        buzzer.setBuzzState(false);
+    }
 }

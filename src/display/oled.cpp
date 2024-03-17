@@ -28,10 +28,11 @@ void OLED::displayTemperature(float temperature)
     display.setCursor(0, 0);
     display.setTextSize(1);
     display.setTextColor(SSD1306_WHITE);
-    display.println("Temperature:");
+    display.print("Temperature:");
     display.setTextSize(2);
     display.setTextColor(SSD1306_WHITE);
-    display.println(temperature, 1);
+    display.print(temperature, 1);
+    display.println("°C");
 }
 
 void OLED::displayHumidity(float humidity)
@@ -39,7 +40,7 @@ void OLED::displayHumidity(float humidity)
     display.setCursor(0, 20);
     display.setTextSize(1);
     display.setTextColor(SSD1306_WHITE);
-    display.println("Humidity:");
+    display.print("Humidity:");
     display.setTextSize(2);
     display.setTextColor(SSD1306_WHITE);
     display.println(humidity, 1);
@@ -50,7 +51,7 @@ void OLED::displayMoisture(int moisture)
     display.setCursor(0, 40);
     display.setTextSize(1);
     display.setTextColor(SSD1306_WHITE);
-    display.println("Moisture:");
+    display.print("Moisture:");
     display.setTextSize(2);
     display.setTextColor(SSD1306_WHITE);
     display.println(moisture);
@@ -62,8 +63,7 @@ void OLED::displayWaterStatus(const String &waterLevel, int sensorValue)
     display.setTextSize(1);
     display.setTextColor(SSD1306_WHITE);
     display.setCursor(0, 0);
-    display.println("Water Level:");
-
+    display.print("Water Level:");
     display.setTextSize(2);
     display.println(waterLevel);
 
