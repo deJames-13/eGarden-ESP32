@@ -25,14 +25,15 @@ void loop()
     float temperature = dhtSensor.getTemperature();
     float humidity = dhtSensor.getHumidity();
     int moisture = soilSensor.getMoisture();
-    bool waterPresent = waterSensor.isWaterPresent();
+    String waterLevel = waterSensor.getWaterLevel();
+    int waterValue = waterSensor.getSensorValue();
     // #########################################################
 
     // #########################################################
     // WEB SERVER
     // Update sensor data on web server
     // #########################################################
-    webServer.updateSensorData(temperature, humidity, moisture, waterPresent);
+    webServer.updateSensorData(temperature, humidity, moisture, waterLevel, waterValue);
     // #########################################################
 
     // #########################################################
@@ -43,7 +44,7 @@ void loop()
     oledDisplay.displayTemperature(temperature);
     oledDisplay.displayHumidity(humidity);
     oledDisplay.displayMoisture(moisture);
-    oledDisplay.displayWaterStatus(waterPresent);
+    oledDisplay.displayWaterStatus(waterLevel, waterValue);
     oledDisplay.updateDisplay();
 
     // HANDLE CLIENT SERVER

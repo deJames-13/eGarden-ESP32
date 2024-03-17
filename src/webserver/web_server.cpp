@@ -20,12 +20,13 @@ void MyWebServer::handleClient()
     server.handleClient();
 }
 
-void MyWebServer::updateSensorData(float temperature, float humidity, int moisture, bool waterPresent)
+void MyWebServer::updateSensorData(float temperature, float humidity, int moisture, const String &waterLevelStr, int waterLevelValue)
 {
     temp = temperature;
     hum = humidity;
     moist = moisture;
-    water = waterPresent;
+    waterLevel = waterLevelStr;
+    water = waterLevelValue;
 }
 
 String MyWebServer::generateHTML()
@@ -35,7 +36,8 @@ String MyWebServer::generateHTML()
     html += "<p>Temperature: " + String(temp) + "°C</p>";
     html += "<p>Humidity: " + String(hum) + "%</p>";
     html += "<p>Soil Moisture: " + String(moist) + "</p>";
-    html += "<p>Water Present: " + String(water ? "Yes" : "No") + "</p>";
+    html += "<p>Water Value: " + String(water) + "</p>";
+
     html += "</body></html>";
     return html;
 }
@@ -57,7 +59,8 @@ String MyWebServer::generateJSON()
     doc["temperature"] = temp;
     doc["humidity"] = hum;
     doc["moisture"] = moist;
-    doc["water_present"] = water ? "Present" : "Not present";
+    doc["waterLevel"] = waterLevel;
+    doc["waterValue"] = water;
 
     String json;
     serializeJson(doc, json);

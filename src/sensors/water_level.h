@@ -15,7 +15,7 @@ public:
 
     WaterLevel();
     void begin();
-    Level getWaterLevel();
+    String getWaterLevel();
     int getSensorValue();
 };
 

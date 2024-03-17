@@ -56,7 +56,7 @@ void OLED::displayMoisture(int moisture)
     display.println(moisture);
 }
 
-void OLED::displayWaterStatus(WaterLevel::Level waterLevel, int sensorValue)
+void OLED::displayWaterStatus(const String &waterLevel, int sensorValue)
 {
     display.clearDisplay();
     display.setTextSize(1);
@@ -65,26 +65,7 @@ void OLED::displayWaterStatus(WaterLevel::Level waterLevel, int sensorValue)
     display.println("Water Level:");
 
     display.setTextSize(2);
-
-    switch (waterLevel)
-    {
-    case WaterLevel::HIGH_LEVEL:
-        display.setTextColor(SSD1306_WHITE);
-        display.println("High");
-        break;
-    case WaterLevel::MEDIUM_LEVEL:
-        display.setTextColor(SSD1306_WHITE);
-        display.println("Medium");
-        break;
-    case WaterLevel::LOW_LEVEL:
-        display.setTextColor(SSD1306_WHITE);
-        display.println("Low");
-        break;
-    default:
-        display.setTextColor(SSD1306_WHITE);
-        display.println("Unknown");
-        break;
-    }
+    display.println(waterLevel);
 
     // Display sensor value
     display.setTextSize(1);

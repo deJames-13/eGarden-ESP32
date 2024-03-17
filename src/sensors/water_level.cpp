@@ -8,21 +8,21 @@ void WaterLevel::begin()
     pinMode(WATER_LEVEL_PIN, INPUT);
 }
 
-WaterLevel::Level WaterLevel::getWaterLevel()
+String WaterLevel::getWaterLevel()
 {
     int sensorValue = analogRead(WATER_LEVEL_PIN);
 
     if (sensorValue >= HIGH_THRESHOLD)
     {
-        return Level::HIGH_LEVEL;
+        return "High";
     }
     else if (sensorValue >= MEDIUM_THRESHOLD)
     {
-        return Level::MEDIUM_LEVEL;
+        return "Medium";
     }
     else
     {
-        return Level::LOW_LEVEL;
+        return "Low";
     }
 }
 
