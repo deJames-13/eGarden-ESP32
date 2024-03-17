@@ -4,15 +4,15 @@ MyWebServer::MyWebServer() {}
 
 void MyWebServer::begin()
 {
+    networkManager.connectToWiFi();
     server.begin();
+
     // MAIN
     server.on("/", HTTP_GET, [this]()
               { server.send(200, "text/html", generateHTML()); });
-
+    // DATA JSON
     server.on("/data", HTTP_GET, [this]()
               { server.send(200, "application/json", generateJSON()); });
-
-    server.begin();
 }
 
 void MyWebServer::handleClient()
