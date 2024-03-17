@@ -4,6 +4,7 @@
 #include <MySQL_Connection.h>
 #include <MySQL_Cursor.h>
 #include <WiFi.h>
+#include <ArduinoJson.h>
 #include "network_manager.h"
 #include <vector>
 #include <map>
@@ -18,7 +19,7 @@ public:
     bool connect();
     void disconnect();
     void insertQuery(String query);
-    std::vector<std::map<String, String>> selectQuery(String query);
+    String selectQuery(String query);
 
 private:
     MySQL_Connection *conn = nullptr;

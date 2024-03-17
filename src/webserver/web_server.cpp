@@ -37,7 +37,6 @@ String MyWebServer::generateHTML()
     html += "<p>Humidity: " + String(hum) + "%</p>";
     html += "<p>Soil Moisture: " + String(moist) + "</p>";
     html += "<p>Water Value: " + String(water) + "</p>";
-
     html += "</body></html>";
     return html;
 }

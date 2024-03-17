@@ -68,40 +68,41 @@ void DatabaseManager::insertQuery(String query)
     disconnect();
 }
 
-std::vector<std::map<String, String>> DatabaseManager::selectQuery(String query)
+String DatabaseManager::selectQuery(String query)
 {
     std::vector<std::map<String, String>> result;
 
     if (!connect())
     {
         Serial.println("Connection failed");
-        return result;
+        return "";
     }
 
     MySQL_Cursor *cur_mem = new MySQL_Cursor(conn);
     cur_mem->execute(query.c_str());
+    column_names *cols = cur_mem->get_columns(); // INFO: Get the column names
+    row_values *row = nullptr;                   // INFO: Get the values of the row
 
-    // Fetch the columns (required before calling get_next_row())
-    column_names *cols = cur_mem->get_columns();
-
-    // Read the rows and add them to the result
-    row_values *row = nullptr;
+    JsonDocument doc; // INFO: Create a JsonDocument
+    int rowIndex = 0;
     do
     {
         row = cur_mem->get_next_row();
         if (row != nullptr)
         {
-            std::map<String, String> rowMap;
             for (int i = 0; i < cols->num_fields; i++)
             {
-                rowMap[cols->fields[i]->name] = row->values[i];
+                doc[rowIndex][cols->fields[i]->name] = row->values[i];
             }
-            result.push_back(rowMap);
+            rowIndex++;
         }
     } while (row != nullptr);
 
     delete cur_mem;
 
     disconnect();
-    return result;
+
+    String json;
+    serializeJson(doc, json);
+    return json;
 }

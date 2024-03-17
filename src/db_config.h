@@ -2,7 +2,7 @@
 #define DB_CONFIG_H
 
 #include <IPAddress.h>
-const IPAddress DB_HOST(127, 0, 0, 1);
+const IPAddress DB_HOST(127, 0, 0, 1); // FIXME: Change to HOST IP
 #define DB_USER "root"
 #define DB_PASSWORD
 #define DB_PORT 3306
