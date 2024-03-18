@@ -19,7 +19,7 @@ void Buzzer::buzzOnce()
     }
 
     digitalWrite(BUZZER_PIN, HIGH);
-    delay(100); // FIXME: Adjust duration of buzz
+    delay(500); // FIXME: Adjust duration of buzz
     digitalWrite(BUZZER_PIN, LOW);
 }
 

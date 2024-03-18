@@ -5,9 +5,10 @@
 #include "db_config.h"
 #include <Arduino.h>
 #include <SPI.h>
+#include <WiFi.h>
 
 // SENSORS
-#include "sensors/dht22.h"
+#include "sensors/dht_sensor.h"
 #include "sensors/soil_moisture.h"
 #include "sensors/water_level.h"
 

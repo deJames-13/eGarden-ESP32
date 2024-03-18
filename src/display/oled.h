@@ -23,7 +23,7 @@ public:
     void displayHumidity(float humidity);
     void displayMoisture(int moisture);
     void displayWaterStatus(const String &waterLevel, int sensorValue);
-    void testPrint(String text);
+    void displayText(String text);
 
 private:
     Adafruit_SSD1306 display;

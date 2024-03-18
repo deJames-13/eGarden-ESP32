@@ -10,7 +10,7 @@ NetworkManager networkManager;
 DatabaseManager dbManager;
 
 // SENSORS
-DHT22SENSOR dhtSensor;
+DHTSENSOR dhtSensor;
 SoilMoisture soilSensor;
 WaterLevel waterSensor;
 
@@ -22,28 +22,34 @@ void handleWatering(String waterLevel);
 void handleFan();
 void handleBuzzer();
 
+// TEST
+#define LED 26
+
 void setup()
 {
     Serial.begin(9600);
     dhtSensor.begin();
-    soilSensor.begin();
-    waterSensor.begin();
+    // soilSensor.begin();
+    // waterSensor.begin();
 
-    buzzer.begin();
-    fan.begin();
-    valve.begin();
+    // buzzer.begin();
+    // fan.begin();
+    // valve.begin();
 
     oledDisplay.begin(); // COMMENT OUT ON UR OWN RISK
-    // networkManager.connectToWiFi();
-    // webServer.begin();
+    networkManager.connectToWiFi();
+    webServer.begin();
 }
 
 void loop()
 {
     // #########################################################
-    // SENSOR INPUTS        FIXME: Test sensor inputs
+    // SENSOR INPUTS
     // #########################################################
-    // float temperature = dhtSensor.getTemperature();
+    float temperature = dhtSensor.getTemperature();
+    Serial.print("Temp: ");
+    Serial.println(temperature);
+    // FIXME: Test new DHT SENSOR
     // float humidity = dhtSensor.getHumidity();
     // int moisture = soilSensor.getMoisture();
     // String waterLevel = waterSensor.getWaterLevel();
@@ -51,7 +57,7 @@ void loop()
     // #########################################################
 
     // #########################################################
-    // OLED INFO DISPLAY    FIXME: Test OLED display
+    // OLED INFO DISPLAY    FIXME: Adjsut Display
     // Update display with sensor data
     // #########################################################
     oledDisplay.clearDisplay();
@@ -62,12 +68,12 @@ void loop()
     oledDisplay.updateDisplay();
 
     // #########################################################
-    // OUTPUT EVENTS        FIXME: TEST EVENTS ON ACTUAL HARDWARE
+    // OUTPUT EVENTS
     // Update what will happen to output components: buzzer, fan, valve
     // #########################################################
     // handleBuzzer();
-    // handleWatering(waterLevel);
-    // handleFan();
+    // handleWatering(waterLevel);      FIXME: TEST EVENTS ON RELAY
+    // handleFan();                     FIXME: TEST EVENTS ON RELAY
     // #########################################################
 
     // #########################################################
@@ -76,7 +82,7 @@ void loop()
     // #########################################################
     // webServer.updateSensorData(temperature, humidity, moisture, waterLevel, waterValue);
     // HANDLE CLIENT SERVER
-    // webServer.handleClient();
+    webServer.handleClient();
     // #########################################################
     delay(500);
 }

@@ -1,23 +1,23 @@
 // FIXME: Check code compatibility and errors
-#include "dht22.h"
+#include "dht_sensor.h"
 
-DHT22SENSOR::DHT22SENSOR() : dht(DHT_PIN, DHT22) {}
+DHTSENSOR::DHTSENSOR() : dht(DHT_PIN, DHT11) {}
 
-void DHT22SENSOR::begin()
+void DHTSENSOR::begin()
 {
     dht.begin();
 }
 
-float DHT22SENSOR::getTemperature()
+float DHTSENSOR::getTemperature()
 {
     return dht.readTemperature();
 }
-float DHT22SENSOR::getHumidity()
+float DHTSENSOR::getHumidity()
 {
     return dht.readHumidity();
 }
 
-// float DHT22SENSOR::getTemperature_old()
+// float DHTSENSOR::getTemperature_old()
 // {
 //     sensors_event_t event;
 //     dhtu.temperature().getEvent(&event);
@@ -30,7 +30,7 @@ float DHT22SENSOR::getHumidity()
 //         return event.temperature;
 //     }
 // }
-// float DHT22SENSOR::getHumidity_old()
+// float DHTSENSOR::getHumidity_old()
 // {
 //     sensors_event_t event;
 //     dhtu.humidity().getEvent(&event);
@@ -44,7 +44,7 @@ float DHT22SENSOR::getHumidity()
 //     }
 // }
 
-bool DHT22SENSOR::isHot(float temperatureThreshold)
+bool DHTSENSOR::isHot(float temperatureThreshold)
 {
     float temperature = getTemperature();
     return (temperature > temperatureThreshold);

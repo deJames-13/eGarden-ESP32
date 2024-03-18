@@ -7,10 +7,10 @@
 #include <DHT_U.h>
 #include "pin_config.h"
 
-class DHT22SENSOR
+class DHTSENSOR
 {
 public:
-    DHT22SENSOR();
+    DHTSENSOR();
     void begin();
     float getTemperature();
     float getHumidity();

@@ -74,10 +74,9 @@ void OLED::displayWaterStatus(const String &waterLevel, int sensorValue)
     display.println(")");
 }
 
-void OLED::testPrint(String text)
+void OLED::displayText(String text)
 {
     display.setTextSize(1);
     display.setTextColor(SSD1306_WHITE);
-    display.print("Test:");
     display.println(text);
 }
