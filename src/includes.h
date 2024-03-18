@@ -4,6 +4,7 @@
 // Include necessary libraries
 #include "db_config.h"
 #include <Arduino.h>
+#include <SPI.h>
 
 // SENSORS
 #include "sensors/dht22.h"

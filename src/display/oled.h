@@ -6,7 +6,7 @@
 #include <Wire.h>
 
 #define SCREEN_WIDTH 128
-#define SCREEN_HEIGHT 64
+#define SCREEN_HEIGHT 32
 #define WIRE Wire
 
 #define OLED_RESET -1       // Reset pin # (or -1 if sharing Arduino reset pin)
@@ -23,6 +23,7 @@ public:
     void displayHumidity(float humidity);
     void displayMoisture(int moisture);
     void displayWaterStatus(const String &waterLevel, int sensorValue);
+    void testPrint(String text);
 
 private:
     Adafruit_SSD1306 display;

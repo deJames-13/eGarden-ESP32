@@ -11,6 +11,9 @@ public:
     int getMoisture();
     bool isTooDry();
     bool isTooWet();
+
+private:
+    int moisture;
 };
 
 #endif

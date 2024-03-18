@@ -14,10 +14,14 @@ public:
     void begin();
     float getTemperature();
     float getHumidity();
+
+    float getTemperature_old();
+    float getHumidity_old();
     bool isHot(float temperatureThreshold);
 
 private:
-    DHT_Unified dht;
+    DHT dht;
+    // DHT_Unified dhtu;
 };
 
 #endif

@@ -18,6 +18,9 @@ public:
     String getWaterLevel();
     int getSensorValue();
     bool isEmptyOrLow();
+
+private:
+    String waterLevel;
 };
 
 // Threshold values

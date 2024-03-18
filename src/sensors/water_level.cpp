@@ -11,25 +11,25 @@ void WaterLevel::begin()
 
 String WaterLevel::getWaterLevel()
 {
-    int sensorValue = analogRead(WATER_LEVEL_PIN);
-
-    if (sensorValue >= HIGH_THRESHOLD)
-    {
-        return "High";
-    }
-    else if (sensorValue >= MEDIUM_THRESHOLD)
-    {
-        return "Medium";
-    }
-    else
-    {
-        return "Low";
-    }
+    return waterLevel;
 }
 
 int WaterLevel::getSensorValue()
 {
-    return analogRead(WATER_LEVEL_PIN);
+    int val = analogRead(WATER_LEVEL_PIN);
+    if (val >= HIGH_THRESHOLD)
+    {
+        waterLevel = "High";
+    }
+    else if (val >= MEDIUM_THRESHOLD)
+    {
+        waterLevel = "Medium";
+    }
+    else
+    {
+        waterLevel = "Low";
+    }
+    return val;
 }
 
 bool WaterLevel::isEmptyOrLow()
