@@ -29,7 +29,7 @@ int buttonState = 0;
 
 void setup()
 {
-    Serial.begin(9600);
+    Serial.begin(4800);
     dhtSensor.begin();
     soilSensor.begin(SOIL_MOISTURE_PIN);
     waterSensor.begin(WATER_LEVEL_PIN);
@@ -49,7 +49,8 @@ void setup()
 
 void loop()
 {
-    delay(1000);
+    delay(500);
+    // Serial.println("looping");
 
     // #########################################################
     // SENSOR INPUTS
@@ -96,7 +97,7 @@ void loop()
     // #########################################################
 
     // TESTING
-    handleButtonClick();
+    // handleButtonClick();
 }
 
 // #########################################################
@@ -146,10 +147,10 @@ void handleBuzzer()
 
 void handleButtonClick()
 {
-    Serial.println("clicked");
     buttonState = digitalRead(buttonPin);
     if (buttonState == HIGH)
     {
+        Serial.println("clicked");
         fan1.turnOn();
     }
     else
