@@ -1,22 +1,21 @@
 // fan.cpp
 #include "fans.h"
-#include "pin_config.h"
-#include <Arduino.h>
 
 Fan::Fan() {}
 
-void Fan::begin()
+void Fan::begin(int pin)
 {
-    pinMode(RELAY_PIN_FAN, OUTPUT);
-    digitalWrite(RELAY_PIN_FAN, LOW); // initially off
+    this->pin = pin;
+    pinMode(pin, OUTPUT);
+    digitalWrite(pin, LOW); // initially off
 }
 
 void Fan::turnOn()
 {
-    digitalWrite(RELAY_PIN_FAN, HIGH);
+    digitalWrite(pin, HIGH);
 }
 
 void Fan::turnOff()
 {
-    digitalWrite(RELAY_PIN_FAN, LOW);
+    digitalWrite(pin, LOW);
 }

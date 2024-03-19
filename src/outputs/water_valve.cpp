@@ -5,18 +5,19 @@
 
 WaterValve::WaterValve() {}
 
-void WaterValve::begin()
+void WaterValve::begin(int pin)
 {
-    pinMode(RELAY_PIN_VALVE, OUTPUT);
-    digitalWrite(RELAY_PIN_VALVE, LOW); // initially off
+    this->pin = pin;
+    pinMode(pin, OUTPUT);
+    digitalWrite(pin, LOW); // initially off
 }
 
 void WaterValve::open()
 {
-    digitalWrite(RELAY_PIN_VALVE, HIGH);
+    digitalWrite(pin, HIGH);
 }
 
 void WaterValve::close()
 {
-    digitalWrite(RELAY_PIN_VALVE, LOW);
+    digitalWrite(pin, LOW);
 }

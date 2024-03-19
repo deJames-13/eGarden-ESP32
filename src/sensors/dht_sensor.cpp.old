@@ -1,0 +1,39 @@
+// FIXME: Check code compatibility and errors
+#include "dht_sensor.h"
+
+DHTSENSOR::DHTSENSOR() : dht(DHT_PIN, DHT11) {}
+
+void DHTSENSOR::begin()
+{
+    dht.begin();
+}
+
+float DHTSENSOR::getTemperature()
+{
+    return dht.readTemperature();
+}
+float DHTSENSOR::getHumidity()
+{
+    return dht.readHumidity();
+}
+
+float DHTSENSOR::getFarenheit()
+{
+    return dht.readTemperature(true);
+}
+
+float DHTSENSOR::getHeatIndex()
+{
+    return dht.computeHeatIndex(getTemperature(), getHumidity(), false);
+}
+
+float DHTSENSOR::getFarenheitIndex()
+{
+    return dht.computeHeatIndex(getFarenheit(), getHumidity(), false);
+}
+
+bool DHTSENSOR::isHot(float temperatureThreshold)
+{
+    float temperature = getTemperature();
+    return (temperature > temperatureThreshold);
+}

@@ -4,9 +4,10 @@
 
 WaterLevel::WaterLevel() {}
 
-void WaterLevel::begin()
+void WaterLevel::begin(int pin)
 {
-    pinMode(WATER_LEVEL_PIN, INPUT);
+    this->pin = pin;
+    pinMode(pin, INPUT);
 }
 
 String WaterLevel::getWaterLevel()
@@ -16,7 +17,7 @@ String WaterLevel::getWaterLevel()
 
 int WaterLevel::getSensorValue()
 {
-    int val = analogRead(WATER_LEVEL_PIN);
+    int val = analogRead(pin);
     if (val >= HIGH_THRESHOLD)
     {
         waterLevel = "High";

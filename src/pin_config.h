@@ -4,15 +4,16 @@
 
 // FIXME: Pin assignments
 // SENSORS
-#define DHT_PIN 17           // GPIO14
-#define SOIL_MOISTURE_PIN 36 // GPIO36
-#define WATER_LEVEL_PIN 34   // GPIO34
+#define DHT_PIN 16
+#define SOIL_MOISTURE_PIN 36
+#define WATER_LEVEL_PIN 34
 
 // OUTPUTS
-#define OLED_SDA 21        // GPIO21
-#define OLED_SCL 22        // GPIO22
-#define RELAY_PIN_VALVE 18 // GPIO18
-#define RELAY_PIN_FAN 5    // GPIO5
-#define BUZZER_PIN 15
+#define OLED_SDA 21
+#define OLED_SCL 22
+#define BUZZER_PIN 19
+#define RELAY_PIN_VALVE 25 // relay input 17
+#define RELAY_PIN_FAN1 26  // relay input 18
+#define RELAY_PIN_FAN2 27  // 5
 
 #endif

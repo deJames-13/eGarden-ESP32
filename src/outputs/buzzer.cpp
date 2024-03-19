@@ -5,10 +5,11 @@
 
 Buzzer::Buzzer() {}
 
-void Buzzer::begin()
+void Buzzer::begin(int pin)
 {
-    pinMode(BUZZER_PIN, OUTPUT);
-    digitalWrite(BUZZER_PIN, LOW); // initially off
+    this->pin = pin;
+    pinMode(pin, OUTPUT);
+    digitalWrite(pin, LOW); // initially off
 }
 
 void Buzzer::buzzOnce()
@@ -18,9 +19,9 @@ void Buzzer::buzzOnce()
         return;
     }
 
-    digitalWrite(BUZZER_PIN, HIGH);
+    digitalWrite(pin, HIGH);
     delay(500); // FIXME: Adjust duration of buzz
-    digitalWrite(BUZZER_PIN, LOW);
+    digitalWrite(pin, LOW);
 }
 
 void Buzzer::setBuzzState(bool buzzState)

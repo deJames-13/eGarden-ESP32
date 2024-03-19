@@ -7,12 +7,13 @@ class SoilMoisture
 {
 public:
     SoilMoisture();
-    void begin();
+    void begin(int pin);
     int getMoisture();
     bool isTooDry();
     bool isTooWet();
 
 private:
+    int pin;
     int moisture;
 };
 

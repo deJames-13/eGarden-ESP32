@@ -6,9 +6,10 @@
 #include <Arduino.h>
 #include <SPI.h>
 #include <WiFi.h>
+#include <pin_config.h>
 
 // SENSORS
-#include "sensors/dht_sensor.h"
+#include "sensors/dhtu_sensor.h" // new
 #include "sensors/soil_moisture.h"
 #include "sensors/water_level.h"
 

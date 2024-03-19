@@ -8,7 +8,9 @@
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.3/dist/full.min.css" rel="stylesheet" type="text/css" />
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <script src="https://cdn.tailwindcss.com"></script>
+
         <script>
             tailwind.config = {
                 theme: {
@@ -38,81 +40,90 @@
         <div class="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content">
+
                 <div class="p-8 flex border-b gap-4 border-gray-400">
                     <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden"><i class="fas fa-bars"></i>
                     </label>
-                    <h1 class="font-extrabold text-3xl">Dashboard</h1>
+                    <h1 class="font-extrabold text-3xl" id="title">Dashboard</h1>
+                </div>
+                <div id="dashboard">
+                    <div class="px-2">
+                        <div class="main p-8 grid grid-cols-3 gap-4">
+                            <div class="card card-side bg-base-100 shadow-xl max-w-lg">
+                                <figure>
+                                    <div class="w-full flex items-center justify-center p-8 text-4xl">
+                                        <i class='bx bx-droplet'></i>
+                                    </div>
+                                </figure>
+
+                                <div class="card-body">
+                                    <h2 class="card-title">Humidity</h2>
+                                    <p>
+                                        <span id="humidity">69</span>
+                                        &percnt;
+                                    </p>
+                                </div>
+                            </div>
+
+
+                            <div class="card card-side bg-base-100 shadow-xl max-w-lg">
+                                <figure>
+                                    <div class="w-full flex items-center justify-center p-8 text-4xl">
+                                        <i class='bx bx-sun'></i>
+                                    </div>
+                                </figure>
+
+                                <div class="card-body">
+                                    <h2 class="card-title">Temperature</h2>
+                                    <p>
+                                        <span id="temperature">69</span>
+                                        &deg;C
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="card card-side bg-base-100 shadow-xl w-full max-w-lg">
+                                <figure>
+                                    <div class="w-full flex items-center justify-center p-8 text-4xl">
+                                        <i class='bx bx-leaf    '></i>
+                                    </div>
+                                </figure>
+
+                                <div class="card-body">
+                                    <h2 class="card-title">Soil Moisture</h2>
+                                    <p>
+                                        <span id="moisture">69</span>
+                                    </p>
+                                </div>
+                            </div>
+
+
+
+                            <div class="card card-side bg-base-100 shadow-xl max-w-lg">
+                                <figure>
+                                    <div class="w-full flex items-center justify-center p-8 text-4xl">
+                                        <i class='bx bx-water'></i>
+                                    </div>
+                                </figure>
+
+                                <div class="card-body">
+                                    <h2 class="card-title">Water Value</h2>
+                                    <p>69</p>
+                                </div>
+                            </div>
+
+                            <div class="card card-side bg-base-100 shadow-xl max-w-lg">
+                                <div class="card-body">
+                                    <h2 class="card-title">Water Level</h2>
+                                    <p>69</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="divider"></div>
+                    </div>
                 </div>
 
-                <div class="px-2">
-
-                    <div class="main p-8 grid grid-cols-3 gap-4">
-                        <div class="card card-side bg-base-100 shadow-xl max-w-lg">
-                            <figure>
-                                <div class="w-full flex items-center justify-center p-8 text-4xl">
-                                    <i class="fas fa-droplet"></i>
-                                </div>
-                            </figure>
-
-                            <div class="card-body">
-                                <h2 class="card-title">Humidity</h2>
-                                <p>69 &percnt;</p>
-                            </div>
-                        </div>
-
-
-                        <div class="card card-side bg-base-100 shadow-xl max-w-lg">
-                            <figure>
-                                <div class="w-full flex items-center justify-center p-8 text-4xl">
-                                    <i class="fas fa-temperature-high"></i>
-
-                                </div>
-                            </figure>
-
-                            <div class="card-body">
-                                <h2 class="card-title">Temperature</h2>
-                                <p>69 &deg;C</p>
-                            </div>
-                        </div>
-
-                        <div class="card card-side bg-base-100 shadow-xl w-full max-w-lg">
-
-                            <div class="card-body">
-                                <h2 class="card-title">Soil Moisture</h2>
-                                <p>69420</p>
-                            </div>
-                        </div>
-
-
-                        <div class="card card-side bg-base-100 shadow-xl max-w-lg">
-                            <figure>
-                                <div class="w-full flex items-center justify-center p-8 text-4xl">
-                                    <i class="fas fa-droplet"></i>
-
-                                </div>
-                            </figure>
-
-                            <div class="card-body">
-                                <h2 class="card-title">Water Level</h2>
-                                <p>69</p>
-                            </div>
-                        </div>
-
-                        <div class="card card-side bg-base-100 shadow-xl max-w-lg">
-                            <figure>
-                                <div class="w-full flex items-center justify-center p-8 text-4xl">
-                                    <i class="fas fa-droplet"></i>
-
-                                </div>
-                            </figure>
-
-                            <div class="card-body">
-                                <h2 class="card-title">Water Value</h2>
-                                <p>69</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="divider"></div>
+                <div id="graphs">
                 </div>
 
 
@@ -126,14 +137,16 @@
                 <!-- Nav Links -->
                 <div class="flex flex-col space-y-4">
 
-                    <button class="btn btn-outline px-8 p-4 rounded-full flex space-x-2 items-center justify-start">
+                    <button onclick="showDashboard"
+                        class="btn btn-outline font-bold px-8 p-4 rounded-full flex space-x-2 items-center justify-start">
                         <i class="fas fa-seedling text-green-400"></i>
-                        <span class="font-bold">Dashboard</span>
+                        <span>Dashboard</span>
                     </button>
 
-                    <button class="btn btn-outline px-8 p-4 rounded-full flex space-x-2 items-center justify-start">
+                    <button onclick="showGraphs" id="btnGraphs"
+                        class="btn btn-outline px-8 p-4 rounded-full flex space-x-2 items-center justify-start">
                         <i class="fas fa-chart-line text-blue-400"></i>
-                        <span class="font-bold">Graphs</span>
+                        <span>Graphs</span>
                     </button>
                 </div>
             </div>
@@ -142,7 +155,7 @@
 
         </div>
 
-
+        <script src="index.js"></script>
     </body>
 
 </html>

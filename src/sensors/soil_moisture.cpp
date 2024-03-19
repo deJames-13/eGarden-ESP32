@@ -7,14 +7,15 @@
 
 SoilMoisture::SoilMoisture() {}
 
-void SoilMoisture::begin()
+void SoilMoisture::begin(int pin)
 {
-    pinMode(SOIL_MOISTURE_PIN, INPUT);
+    this->pin = pin;
+    pinMode(pin, INPUT);
 }
 
 int SoilMoisture::getMoisture()
 {
-    moisture = analogRead(SOIL_MOISTURE_PIN);
+    moisture = analogRead(pin);
     moisture = map(moisture, 0, 4095, 0, 3000);
     return moisture;
 }

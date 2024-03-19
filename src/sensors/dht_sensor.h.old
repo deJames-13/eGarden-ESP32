@@ -1,0 +1,25 @@
+// FIXME: Check code compatibility and errors
+#ifndef DHT22_H
+#define DHT22_H
+
+#include <Adafruit_Sensor.h>
+#include <DHT.h>
+#include "pin_config.h"
+
+class DHTSENSOR
+{
+public:
+    DHTSENSOR();
+    void begin();
+    float getHumidity();
+    float getTemperature();
+    float getFarenheit();
+    float getHeatIndex();
+    float getFarenheitIndex();
+    bool isHot(float temperatureThreshold);
+
+private:
+    DHT dht;
+};
+
+#endif

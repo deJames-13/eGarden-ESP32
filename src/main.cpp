@@ -1,13 +1,10 @@
 #include "includes.h"
 
+// WEB
 OLED oledDisplay;
 MyWebServer webServer;
-
-// FIXME: Network
-NetworkManager networkManager;
-
-// FIXME: Database
-DatabaseManager dbManager;
+NetworkManager networkManager; // FIXME: Network
+DatabaseManager dbManager;     // FIXME: Database
 
 // SENSORS
 DHTSENSOR dhtSensor;
@@ -16,41 +13,54 @@ WaterLevel waterSensor;
 
 // OUTPUT
 Buzzer buzzer;
-Fan fan;
+Fan fan1;
+Fan fan2;
 WaterValve valve;
+
+// ACTIONS
 void handleWatering(String waterLevel);
 void handleFan();
 void handleBuzzer();
 
-// TEST
-#define LED 26
+// TESTS
+void handleButtonClick();
+int buttonPin = 4;
+int buttonState = 0;
 
 void setup()
 {
     Serial.begin(9600);
     dhtSensor.begin();
-    // soilSensor.begin();
-    // waterSensor.begin();
+    soilSensor.begin(SOIL_MOISTURE_PIN);
+    waterSensor.begin(WATER_LEVEL_PIN);
 
-    // buzzer.begin();
-    // fan.begin();
-    // valve.begin();
+    fan1.begin(RELAY_PIN_FAN1);
+    fan2.begin(RELAY_PIN_FAN2);
+    buzzer.begin(BUZZER_PIN);
+    valve.begin(RELAY_PIN_VALVE);
 
     oledDisplay.begin(); // COMMENT OUT ON UR OWN RISK
     networkManager.connectToWiFi();
     webServer.begin();
+
+    // TESTS
+    pinMode(buttonPin, INPUT_PULLUP);
 }
 
 void loop()
 {
+    delay(1000);
+
     // #########################################################
     // SENSOR INPUTS
     // #########################################################
-    float temperature = dhtSensor.getTemperature();
-    Serial.print("Temp: ");
-    Serial.println(temperature);
     // FIXME: Test new DHT SENSOR
+    // float temperature = dhtSensor.getTemperature();
     // float humidity = dhtSensor.getHumidity();
+    // Serial.print("Temperature: ");
+    // Serial.println(temperature);
+    // Serial.print("Humidity: ");
+    // Serial.println(humidity);
     // int moisture = soilSensor.getMoisture();
     // String waterLevel = waterSensor.getWaterLevel();
     // int waterValue = waterSensor.getSensorValue();
@@ -60,20 +70,20 @@ void loop()
     // OLED INFO DISPLAY    FIXME: Adjsut Display
     // Update display with sensor data
     // #########################################################
-    oledDisplay.clearDisplay();
+    // oledDisplay.clearDisplay();
     // oledDisplay.displayTemperature(temperature);
     // oledDisplay.displayHumidity(humidity);
     // oledDisplay.displayMoisture(moisture);
     // oledDisplay.displayWaterStatus(waterLevel, waterValue);
-    oledDisplay.updateDisplay();
+    // oledDisplay.updateDisplay();
 
     // #########################################################
     // OUTPUT EVENTS
     // Update what will happen to output components: buzzer, fan, valve
     // #########################################################
     // handleBuzzer();
-    // handleWatering(waterLevel);      FIXME: TEST EVENTS ON RELAY
-    // handleFan();                     FIXME: TEST EVENTS ON RELAY
+    // handleWatering(waterLevel);
+    // handleFan(fan1);
     // #########################################################
 
     // #########################################################
@@ -84,7 +94,9 @@ void loop()
     // HANDLE CLIENT SERVER
     webServer.handleClient();
     // #########################################################
-    delay(500);
+
+    // TESTING
+    handleButtonClick();
 }
 
 // #########################################################
@@ -104,7 +116,7 @@ void handleWatering(String waterLevel)
     }
 }
 
-void handleFan()
+void handleFan(Fan fan)
 {
     // FIXME: TEST LOGIC
     const float temperatureThreshold = 30;
@@ -129,5 +141,19 @@ void handleBuzzer()
     else
     {
         buzzer.setBuzzState(false);
+    }
+}
+
+void handleButtonClick()
+{
+    Serial.println("clicked");
+    buttonState = digitalRead(buttonPin);
+    if (buttonState == HIGH)
+    {
+        fan1.turnOn();
+    }
+    else
+    {
+        fan1.turnOff();
     }
 }
