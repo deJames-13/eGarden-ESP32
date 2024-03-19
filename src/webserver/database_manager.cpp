@@ -2,7 +2,6 @@
 // FIXME: TEST OUTPUT
 #include "database_manager.h"
 
-NetworkManager nm;
 DatabaseManager::DatabaseManager()
 {
     conn = new MySQL_Connection((Client *)&client);
@@ -27,7 +26,7 @@ void DatabaseManager::config(IPAddress host, char *user, int port, char *passwor
 
 bool DatabaseManager::connect()
 {
-    if (WiFi.status() == WL_CONNECTED || nm.connectToWiFi())
+    if (WiFi.status() == WL_CONNECTED)
     {
         if (conn->connect(dbhost, dbport, dbuser, dbpassword, dbname))
         {

@@ -6,8 +6,8 @@
 class SoilMoisture
 {
 public:
-    SoilMoisture();
-    void begin(int pin);
+    SoilMoisture(int pin);
+    void begin();
     int getMoisture();
     bool isTooDry();
     bool isTooWet();

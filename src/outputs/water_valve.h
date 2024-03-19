@@ -6,8 +6,8 @@
 class WaterValve
 {
 public:
-    WaterValve();
-    void begin(int pin);
+    WaterValve(int pin);
+    void begin();
     void open();
     void close();
 

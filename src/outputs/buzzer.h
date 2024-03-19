@@ -6,8 +6,8 @@
 class Buzzer
 {
 public:
-    Buzzer();
-    void begin(int pin);
+    Buzzer(int pin);
+    void begin();
     void buzzOnce();
     void setBuzzState(bool buzzState);
 

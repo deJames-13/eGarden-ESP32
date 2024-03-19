@@ -10,7 +10,7 @@
 class DHTSENSOR
 {
 public:
-    DHTSENSOR();
+    DHTSENSOR(int pin, const uint8_t type);
     void begin();
     float getHumidity();
     float getTemperature();
@@ -22,6 +22,8 @@ public:
 
 private:
     DHT_Unified dht;
+    int pin;
+    const uint8_t type;
     float celsius;
     float farenheit;
     float humidity;

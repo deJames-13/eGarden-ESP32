@@ -1,6 +1,6 @@
 #include "dhtu_sensor.h"
 
-DHTSENSOR::DHTSENSOR() : dht(DHT_PIN, DHT11) {}
+DHTSENSOR::DHTSENSOR(int pin, const uint8_t type) : pin(pin), type(type), dht(pin, type) {}
 
 void DHTSENSOR::begin()
 {

@@ -6,8 +6,8 @@
 class Fan
 {
 public:
-    Fan();
-    void begin(int pin);
+    Fan(int pin);
+    void begin();
     void turnOn();
     void turnOff();
 

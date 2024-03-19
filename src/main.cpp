@@ -7,19 +7,19 @@ NetworkManager networkManager; // FIXME: Network
 DatabaseManager dbManager;     // FIXME: Database
 
 // SENSORS
-DHTSENSOR dhtSensor;
-SoilMoisture soilSensor;
-WaterLevel waterSensor;
+DHTSENSOR dhtSensor(DHT_PIN, DHTTYPE);
+SoilMoisture soilSensor(SOIL_MOISTURE_PIN);
+WaterLevel waterSensor(WATER_LEVEL_PIN);
 
 // OUTPUT
-Buzzer buzzer;
-Fan fan1;
-Fan fan2;
-WaterValve valve;
+Buzzer buzzer(BUZZER_PIN);
+Fan fan1(RELAY_PIN_FAN1);
+Fan fan2(RELAY_PIN_FAN2);
+WaterValve valve(RELAY_PIN_VALVE);
 
 // ACTIONS
 void handleWatering(String waterLevel);
-void handleFan();
+void handleFan(Fan fan);
 void handleBuzzer();
 
 // TESTS
@@ -31,16 +31,16 @@ void setup()
 {
     Serial.begin(4800);
     dhtSensor.begin();
-    soilSensor.begin(SOIL_MOISTURE_PIN);
-    waterSensor.begin(WATER_LEVEL_PIN);
+    soilSensor.begin();
+    waterSensor.begin();
 
-    fan1.begin(RELAY_PIN_FAN1);
-    fan2.begin(RELAY_PIN_FAN2);
-    buzzer.begin(BUZZER_PIN);
-    valve.begin(RELAY_PIN_VALVE);
+    fan1.begin();
+    fan2.begin();
+    buzzer.begin();
+    valve.begin();
 
     oledDisplay.begin(); // COMMENT OUT ON UR OWN RISK
-    networkManager.connectToWiFi();
+    networkManager.connectToWiFi(WIFI_SSID, WIFI_PASSWORD);
     webServer.begin();
 
     // TESTS

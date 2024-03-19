@@ -1,11 +1,10 @@
 // buzzer.cpp
 #include "buzzer.h"
 
-Buzzer::Buzzer() {}
+Buzzer::Buzzer(int pin) : pin(pin) {}
 
-void Buzzer::begin(int pin)
+void Buzzer::begin()
 {
-    this->pin = pin;
     pinMode(pin, OUTPUT);
     digitalWrite(pin, LOW); // initially off
 }

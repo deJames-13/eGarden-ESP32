@@ -1,11 +1,10 @@
 // water_valve.cpp
 #include "water_valve.h"
 
-WaterValve::WaterValve() {}
+WaterValve::WaterValve(int pin) : pin(pin) {}
 
-void WaterValve::begin(int pin)
+void WaterValve::begin()
 {
-    this->pin = pin;
     pinMode(pin, OUTPUT);
     digitalWrite(pin, LOW); // initially off
 }

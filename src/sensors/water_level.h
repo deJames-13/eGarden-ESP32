@@ -11,8 +11,8 @@ public:
         HIGH_LEVEL
     };
 
-    WaterLevel();
-    void begin(int pin);
+    WaterLevel(int pin);
+    void begin();
     String getWaterLevel();
     int getSensorValue();
     bool isEmptyOrLow();

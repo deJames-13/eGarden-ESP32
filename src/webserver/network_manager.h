@@ -4,12 +4,11 @@
 
 #include <Arduino.h>
 #include <WiFi.h>
-#include "wifi_config.h"
 class NetworkManager
 {
 public:
     NetworkManager();
-    bool connectToWiFi();
+    bool connectToWiFi(String ssid, String password);
 };
 
 #endif // NETWORK_MANAGER_H

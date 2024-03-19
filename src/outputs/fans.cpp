@@ -1,11 +1,10 @@
 // fan.cpp
 #include "fans.h"
 
-Fan::Fan() {}
+Fan::Fan(int pin) : pin(pin) {}
 
-void Fan::begin(int pin)
+void Fan::begin()
 {
-    this->pin = pin;
     pinMode(pin, OUTPUT);
     digitalWrite(pin, LOW); // initially off
 }

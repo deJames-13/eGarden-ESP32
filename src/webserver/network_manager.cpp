@@ -4,12 +4,9 @@
 
 NetworkManager::NetworkManager() {}
 
-bool NetworkManager::connectToWiFi()
+bool NetworkManager::connectToWiFi(String ssid, String password)
 {
     Serial.println("Connecting to Wi-Fi...");
-    // WIFI CREDENTIALS
-    String ssid = String(WIFI_SSID);
-    String password = String(WIFI_PASSWORD);
 
     unsigned long startTime = millis();
     WiFi.begin(ssid.c_str(), password.c_str());

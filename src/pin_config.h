@@ -4,6 +4,7 @@
 
 // FIXME: Pin assignments
 // SENSORS
+#define DHTTYPE DHT11
 #define DHT_PIN 16
 #define SOIL_MOISTURE_PIN 36
 #define WATER_LEVEL_PIN 34

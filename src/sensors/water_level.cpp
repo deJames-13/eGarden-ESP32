@@ -2,11 +2,10 @@
 #include <Arduino.h>
 #include "water_level.h"
 
-WaterLevel::WaterLevel() {}
+WaterLevel::WaterLevel(int pin) : pin(pin) {}
 
-void WaterLevel::begin(int pin)
+void WaterLevel::begin()
 {
-    this->pin = pin;
     pinMode(pin, INPUT);
 }
 
