@@ -1,8 +1,6 @@
 #ifndef WATER_LEVEL_H
 #define WATER_LEVEL_H
 
-#include "pin_config.h"
-
 class WaterLevel
 {
 public:
@@ -13,11 +11,15 @@ public:
         HIGH_LEVEL
     };
 
-    WaterLevel();
+    WaterLevel(int pin);
     void begin();
     String getWaterLevel();
     int getSensorValue();
     bool isEmptyOrLow();
+
+private:
+    String waterLevel;
+    int pin;
 };
 
 // Threshold values

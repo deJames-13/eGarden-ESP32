@@ -1,22 +1,20 @@
 // water_valve.cpp
 #include "water_valve.h"
-#include "pin_config.h"
-#include <Arduino.h>
 
-WaterValve::WaterValve() {}
+WaterValve::WaterValve(int pin) : pin(pin) {}
 
 void WaterValve::begin()
 {
-    pinMode(RELAY_PIN_VALVE, OUTPUT);
-    digitalWrite(RELAY_PIN_VALVE, LOW); // initially off
+    pinMode(pin, OUTPUT);
+    digitalWrite(pin, LOW); // initially off
 }
 
 void WaterValve::open()
 {
-    digitalWrite(RELAY_PIN_VALVE, HIGH);
+    digitalWrite(pin, HIGH);
 }
 
 void WaterValve::close()
 {
-    digitalWrite(RELAY_PIN_VALVE, LOW);
+    digitalWrite(pin, LOW);
 }

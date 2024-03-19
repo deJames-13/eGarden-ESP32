@@ -4,7 +4,6 @@
 #include <WebServer.h>
 #include <SPIFFS.h> // FILE SYSTEM ACCESS
 #include <ArduinoJson.h>
-#include "network_manager.h"
 
 class MyWebServer
 {
@@ -24,7 +23,6 @@ private:
     String generateHTML();
     String generateJSON();
     String readIndexFile(); // READ INDEX.HTML FILE
-    NetworkManager networkManager;
 };
 
 #endif

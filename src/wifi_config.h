@@ -5,6 +5,6 @@
 
 // Replace "YourSSID" and "YourPassword" with your actual Wi-Fi credentials
 #define WIFI_SSID "sp"
-#define WIFI_PASSWORD "percyfied"
+#define WIFI_PASSWORD "percyfied13"
 
 #endif // WIFI_CONFIG_H

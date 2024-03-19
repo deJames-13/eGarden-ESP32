@@ -1,14 +1,12 @@
 // buzzer.cpp
 #include "buzzer.h"
-#include "pin_config.h"
-#include <Arduino.h>
 
-Buzzer::Buzzer() {}
+Buzzer::Buzzer(int pin) : pin(pin) {}
 
 void Buzzer::begin()
 {
-    pinMode(BUZZER_PIN, OUTPUT);
-    digitalWrite(BUZZER_PIN, LOW); // initially off
+    pinMode(pin, OUTPUT);
+    digitalWrite(pin, LOW); // initially off
 }
 
 void Buzzer::buzzOnce()
@@ -18,9 +16,9 @@ void Buzzer::buzzOnce()
         return;
     }
 
-    digitalWrite(BUZZER_PIN, HIGH);
-    delay(100); // FIXME: Adjust duration of buzz
-    digitalWrite(BUZZER_PIN, LOW);
+    digitalWrite(pin, HIGH);
+    delay(500); // FIXME: Adjust duration of buzz
+    digitalWrite(pin, LOW);
 }
 
 void Buzzer::setBuzzState(bool buzzState)

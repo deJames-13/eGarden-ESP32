@@ -5,7 +5,6 @@
 #include <MySQL_Cursor.h>
 #include <WiFi.h>
 #include <ArduinoJson.h>
-#include "network_manager.h"
 #include <vector>
 #include <map>
 #include <string>

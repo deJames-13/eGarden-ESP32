@@ -1,12 +1,18 @@
 #ifndef INCLUDES_H
 #define INCLUDES_H
 
-// Include necessary libraries
+// CONFIG FILES
+#include "pin_config.h"
 #include "db_config.h"
+#include "wifi_config.h"
+
+// Include necessary libraries
 #include <Arduino.h>
+#include <SPI.h>
+#include <WiFi.h>
 
 // SENSORS
-#include "sensors/dht22.h"
+#include "sensors/dhtu_sensor.h" // new
 #include "sensors/soil_moisture.h"
 #include "sensors/water_level.h"
 

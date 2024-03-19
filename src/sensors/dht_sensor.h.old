@@ -4,20 +4,22 @@
 
 #include <Adafruit_Sensor.h>
 #include <DHT.h>
-#include <DHT_U.h>
 #include "pin_config.h"
 
-class DHT22SENSOR
+class DHTSENSOR
 {
 public:
-    DHT22SENSOR();
+    DHTSENSOR();
     void begin();
-    float getTemperature();
     float getHumidity();
+    float getTemperature();
+    float getFarenheit();
+    float getHeatIndex();
+    float getFarenheitIndex();
     bool isHot(float temperatureThreshold);
 
 private:
-    DHT_Unified dht;
+    DHT dht;
 };
 
 #endif

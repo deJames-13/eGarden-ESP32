@@ -5,12 +5,17 @@ MyWebServer::MyWebServer() : server(80) {}
 
 void MyWebServer::begin()
 {
+
+    if (!SPIFFS.begin(true))
+    {
+        Serial.println("An error has occurred while mounting SPIFFS");
+        return;
+    }
     server.begin();
 
     // MAIN
     server.on("/", HTTP_GET, [this]()
-              { server.send(200, "text/html", generateHTML()); });
-    // DATA JSON
+              { server.send(200, "text/html", readIndexFile()); });
     server.on("/data", HTTP_GET, [this]()
               { server.send(200, "application/json", generateJSON()); });
 }
@@ -42,7 +47,7 @@ String MyWebServer::generateHTML()
 }
 String MyWebServer::readIndexFile()
 {
-    File indexFile = SPIFFS.open("/index.html", "r");
+    File indexFile = SPIFFS.open("/index.html");
     if (!indexFile)
     {
         Serial.println("Failed to open index.html file");
