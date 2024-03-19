@@ -1,7 +1,5 @@
 // buzzer.cpp
 #include "buzzer.h"
-#include "pin_config.h"
-#include <Arduino.h>
 
 Buzzer::Buzzer() {}
 

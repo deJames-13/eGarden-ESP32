@@ -1,7 +1,5 @@
 // water_valve.cpp
 #include "water_valve.h"
-#include "pin_config.h"
-#include <Arduino.h>
 
 WaterValve::WaterValve() {}
 
