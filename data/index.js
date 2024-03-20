@@ -115,6 +115,11 @@ function showGraphs() {
     title.innerText = 'Graphs';
     dashboard.style.display = 'none';
     graphs.style.display = 'block';
+
+    // toggle classes on active
+    document.getElementById('btnGraphs').classList.add('active');
+    document.getElementById('btnDashboard').classList.remove('active');
+
 }
 
 function showDashboard() {
@@ -124,6 +129,12 @@ function showDashboard() {
     title.innerText = 'Dashboard';
     dashboard.style.display = 'block';
     graphs.style.display = 'none';
+
+    // toggle tailwind classes on active
+    document.getElementById('btnDashboard').classList.add('active');
+    document.getElementById('btnGraphs').classList.remove('active');
+
+
 }
 
 function mapWaterLevel(value) {

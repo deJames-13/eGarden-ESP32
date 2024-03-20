@@ -5,8 +5,6 @@
 #include <DHT.h>
 #include <DHT_U.h>
 
-#include "pin_config.h"
-
 class DHTSENSOR
 {
 public:
