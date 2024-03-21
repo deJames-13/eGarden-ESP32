@@ -12,7 +12,7 @@
 #include <WiFi.h>
 
 // SENSORS
-#include "sensors/dhtu_sensor.h" // new
+#include "sensors/dht_sensor.h"
 #include "sensors/soil_moisture.h"
 #include "sensors/water_level.h"
 

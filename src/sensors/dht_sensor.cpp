@@ -1,7 +1,7 @@
 // FIXME: Check code compatibility and errors
 #include "dht_sensor.h"
 
-DHTSENSOR::DHTSENSOR() : dht(DHT_PIN, DHT11) {}
+DHTSENSOR::DHTSENSOR(int pin, const uint8_t type) : pin(pin), type(type), dht(pin, type) {}
 
 void DHTSENSOR::begin()
 {
@@ -10,30 +10,32 @@ void DHTSENSOR::begin()
 
 float DHTSENSOR::getTemperature()
 {
-    return dht.readTemperature();
+    temperature = dht.readTemperature();
+    return temperature;
 }
 float DHTSENSOR::getHumidity()
 {
-    return dht.readHumidity();
+    humidity = dht.readHumidity();
+    return humidity;
 }
 
 float DHTSENSOR::getFarenheit()
 {
-    return dht.readTemperature(true);
+    farenheit = dht.readTemperature(true);
+    return farenheit;
 }
 
 float DHTSENSOR::getHeatIndex()
 {
-    return dht.computeHeatIndex(getTemperature(), getHumidity(), false);
+    return dht.computeHeatIndex(temperature, humidity, false);
 }
 
 float DHTSENSOR::getFarenheitIndex()
 {
-    return dht.computeHeatIndex(getFarenheit(), getHumidity(), false);
+    return dht.computeHeatIndex(farenheit, humidity, false);
 }
 
 bool DHTSENSOR::isHot(float temperatureThreshold)
 {
-    float temperature = getTemperature();
     return (temperature > temperatureThreshold);
 }

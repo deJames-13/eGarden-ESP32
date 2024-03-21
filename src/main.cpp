@@ -29,35 +29,36 @@ int buttonState = 0;
 
 void setup()
 {
-    Serial.begin(4800);
+    // COMMENT OUT ON UR OWN RISK - Panic error if not began properly
+    Serial.begin(9600);
     dhtSensor.begin();
-    soilSensor.begin();
-    waterSensor.begin();
+    // soilSensor.begin();
+    // waterSensor.begin();
 
-    fan1.begin();
-    fan2.begin();
-    buzzer.begin();
-    valve.begin();
+    // fan1.begin();
+    // fan2.begin();
+    // buzzer.begin();
+    // valve.begin();
 
-    oledDisplay.begin(); // COMMENT OUT ON UR OWN RISK
+    oledDisplay.begin();
     networkManager.connectToWiFi(WIFI_SSID, WIFI_PASSWORD);
     webServer.begin();
 
     // TESTS
-    pinMode(buttonPin, INPUT_PULLUP);
+    // pinMode(buttonPin, INPUT_PULLUP);
 }
 
 void loop()
 {
-    delay(500);
+    delay(1000);
     // Serial.println("looping");
 
     // #########################################################
     // SENSOR INPUTS
     // #########################################################
     // FIXME: Test new DHT SENSOR
-    // float temperature = dhtSensor.getTemperature();
-    // float humidity = dhtSensor.getHumidity();
+    float temperature = dhtSensor.getTemperature();
+    float humidity = dhtSensor.getHumidity();
     // Serial.print("Temperature: ");
     // Serial.println(temperature);
     // Serial.print("Humidity: ");
@@ -71,12 +72,12 @@ void loop()
     // OLED INFO DISPLAY    FIXME: Adjsut Display
     // Update display with sensor data
     // #########################################################
-    // oledDisplay.clearDisplay();
-    // oledDisplay.displayTemperature(temperature);
-    // oledDisplay.displayHumidity(humidity);
+    oledDisplay.clearDisplay();
+    oledDisplay.displayTemperature(temperature);
+    oledDisplay.displayHumidity(humidity);
     // oledDisplay.displayMoisture(moisture);
     // oledDisplay.displayWaterStatus(waterLevel, waterValue);
-    // oledDisplay.updateDisplay();
+    oledDisplay.updateDisplay();
 
     // #########################################################
     // OUTPUT EVENTS
