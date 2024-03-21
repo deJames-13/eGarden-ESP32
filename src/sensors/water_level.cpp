@@ -2,39 +2,45 @@
 #include <Arduino.h>
 #include "water_level.h"
 
-WaterLevel::WaterLevel(int pin) : pin(pin) {}
+WaterLevel::WaterLevel(int pin, int lowThreshold, int mediumThreshold, int highThreshold)
+{
+    this->pin = pin;
+    this->lowThreshold = lowThreshold;
+    this->mediumThreshold = mediumThreshold;
+    this->highThreshold = highThreshold;
+}
 
 void WaterLevel::begin()
 {
     pinMode(pin, INPUT);
 }
 
-String WaterLevel::getWaterLevel()
+String WaterLevel::getWaterLevel(int value)
 {
+    if (value >= highThreshold)
+    {
+        waterLevel = "HIGH";
+    }
+    else if (value >= mediumThreshold)
+    {
+        waterLevel = "MEDIUM";
+    }
+    else
+    {
+        waterLevel = "LOW";
+    }
     return waterLevel;
 }
 
 int WaterLevel::getSensorValue()
 {
-    int val = analogRead(pin);
-    if (val >= HIGH_THRESHOLD)
-    {
-        waterLevel = "High";
-    }
-    else if (val >= MEDIUM_THRESHOLD)
-    {
-        waterLevel = "Medium";
-    }
-    else
-    {
-        waterLevel = "Low";
-    }
-    return val;
+    value = analogRead(pin);
+    return value;
 }
 
 bool WaterLevel::isEmptyOrLow()
 {
-    String waterLevel = getWaterLevel();
+    String waterLevel = getWaterLevel(value);
     if (waterLevel == "Low" || waterLevel == "Empty")
     {
         return true;

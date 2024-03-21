@@ -2,9 +2,6 @@
 #include <Arduino.h>
 #include "soil_moisture.h"
 
-#define DRY_THRESHOLD 2000
-#define WET_THRESHOLD 1000
-
 SoilMoisture::SoilMoisture(int pin) : pin(pin) {}
 
 void SoilMoisture::begin()
@@ -19,12 +16,12 @@ int SoilMoisture::getMoisture()
     return moisture;
 }
 
-bool SoilMoisture::isTooDry()
+bool SoilMoisture::isTooDry(int threshold)
 {
-    return moisture > DRY_THRESHOLD;
+    return moisture > threshold;
 }
 
-bool SoilMoisture::isTooWet()
+bool SoilMoisture::isTooWet(int threshold)
 {
-    return moisture < WET_THRESHOLD;
+    return moisture < threshold;
 }

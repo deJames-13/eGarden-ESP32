@@ -8,15 +8,16 @@ void OLED::begin()
     {
         Serial.println(F("SSD1306 allocation failed"));
     }
+
     display.clearDisplay();
 }
 
 void OLED::clearDisplay()
 {
+    display.clearDisplay();
+    display.setCursor(0, 12);
     display.setTextSize(1);
     display.setTextColor(SSD1306_WHITE);
-    display.setCursor(0, 0);
-    display.clearDisplay();
 }
 
 void OLED::updateDisplay()
@@ -24,52 +25,50 @@ void OLED::updateDisplay()
     display.display();
 }
 
-void OLED::displayTemperature(float temperature)
-{
-
-    display.print("Temperature: ");
-    display.print(temperature, 1);
-    display.println("C");
-}
-
-void OLED::displayHumidity(float humidity)
-{
-
-    display.print("Humidity: ");
-    display.println(humidity, 1);
-}
-
-void OLED::displayMoisture(int moisture)
-{
-
-    display.print("Moisture: ");
-    display.print(moisture, 1);
-    if (moisture > 2000)
-    {
-        display.println(" (Dry)");
-    }
-    else if (moisture < 1000)
-    {
-        display.println(" (Wet)");
-    }
-    else
-    {
-        display.println(" (Good)");
-    }
-}
-
-void OLED::displayWaterStatus(const String &waterLevel, int sensorValue)
-{
-    display.print("Water Value: ");
-    display.print(sensorValue);
-    display.print(" (");
-    display.print(waterLevel);
-    display.println(")");
-}
-
 void OLED::displayText(String text)
 {
-    display.setTextSize(1);
-    display.setTextColor(SSD1306_WHITE);
+    this->clearDisplay();
     display.println(text);
+    this->updateDisplay();
+}
+
+void OLED::displayDHT(DHTSENSOR &dhtSensor)
+{
+    this->clearDisplay();
+    display.setFont(&FreeMonoBold9pt7b);
+    display.println("Temperature");
+    display.println(String(dhtSensor.getTemperature()) + " C");
+    this->updateDisplay();
+
+    delay(3000);
+
+    this->clearDisplay();
+    display.setFont(&FreeMonoBold9pt7b);
+    display.println("Humidity");
+    display.println(String(dhtSensor.getHumidity()));
+    this->updateDisplay();
+
+    delay(3000);
+}
+
+void OLED::displayMoisture(SoilMoisture &soilSensor)
+{
+    this->clearDisplay();
+    display.setFont(&FreeMonoBold9pt7b);
+    display.println("Moisture");
+    display.println(String(soilSensor.getMoisture()));
+    this->updateDisplay();
+
+    delay(3000);
+}
+
+void OLED::displayWater(WaterLevel &waterSensor)
+{
+    int val = waterSensor.getSensorValue();
+    this->clearDisplay();
+    display.setFont(&FreeMonoBold9pt7b);
+    display.println("Water Value");
+    display.println(String(val) + " (" + String(waterSensor.getWaterLevel(val)) + ")");
+    this->updateDisplay();
+    delay(3000);
 }

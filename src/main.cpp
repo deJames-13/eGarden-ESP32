@@ -1,7 +1,7 @@
 #include "includes.h"
 
 // WEB
-OLED oledDisplay;
+OLED myOled;
 MyWebServer webServer;
 NetworkManager networkManager; // FIXME: Network
 DatabaseManager dbManager;     // FIXME: Database
@@ -9,7 +9,7 @@ DatabaseManager dbManager;     // FIXME: Database
 // SENSORS
 DHTSENSOR dhtSensor(DHT_PIN, DHTTYPE);
 SoilMoisture soilSensor(SOIL_MOISTURE_PIN);
-WaterLevel waterSensor(WATER_LEVEL_PIN);
+WaterLevel waterSensor(WATER_LEVEL_PIN, LOW_THRESHOLD, MEDIUM_THRESHOLD, HIGH_THRESHOLD);
 
 // OUTPUT
 Buzzer buzzer(BUZZER_PIN);
@@ -24,6 +24,14 @@ void handleBuzzer();
 
 // TESTS
 void handleButtonClick();
+
+// VARIABLES
+float temperature = 0;
+float humidity = 0;
+int moisture = 0;
+int waterValue = 0;
+String waterLevel = "";
+
 int buttonPin = 4;
 int buttonState = 0;
 
@@ -32,15 +40,15 @@ void setup()
     // COMMENT OUT ON UR OWN RISK - Panic error if not began properly
     Serial.begin(9600);
     dhtSensor.begin();
-    // soilSensor.begin();
-    // waterSensor.begin();
+    soilSensor.begin();
+    waterSensor.begin();
 
-    // fan1.begin();
-    // fan2.begin();
-    // buzzer.begin();
-    // valve.begin();
+    fan1.begin();
+    fan2.begin();
+    buzzer.begin();
+    valve.begin();
 
-    oledDisplay.begin();
+    myOled.begin();
     networkManager.connectToWiFi(WIFI_SSID, WIFI_PASSWORD);
     webServer.begin();
 
@@ -57,27 +65,20 @@ void loop()
     // SENSOR INPUTS
     // #########################################################
     // FIXME: Test new DHT SENSOR
-    float temperature = dhtSensor.getTemperature();
-    float humidity = dhtSensor.getHumidity();
-    // Serial.print("Temperature: ");
-    // Serial.println(temperature);
-    // Serial.print("Humidity: ");
-    // Serial.println(humidity);
-    // int moisture = soilSensor.getMoisture();
-    // String waterLevel = waterSensor.getWaterLevel();
-    // int waterValue = waterSensor.getSensorValue();
+    temperature = dhtSensor.getTemperature();
+    humidity = dhtSensor.getHumidity();
+    moisture = soilSensor.getMoisture();
+    waterValue = waterSensor.getSensorValue();
+    waterLevel = waterSensor.getWaterLevel(waterValue);
     // #########################################################
 
     // #########################################################
     // OLED INFO DISPLAY    FIXME: Adjsut Display
     // Update display with sensor data
     // #########################################################
-    oledDisplay.clearDisplay();
-    oledDisplay.displayTemperature(temperature);
-    oledDisplay.displayHumidity(humidity);
-    // oledDisplay.displayMoisture(moisture);
-    // oledDisplay.displayWaterStatus(waterLevel, waterValue);
-    oledDisplay.updateDisplay();
+    myOled.displayDHT(dhtSensor);
+    myOled.displayMoisture(soilSensor);
+    myOled.displayWater(waterSensor);
 
     // #########################################################
     // OUTPUT EVENTS
@@ -108,11 +109,11 @@ void loop()
 void handleWatering(String waterLevel)
 {
     // FIXME: TEST LOGIC
-    if (soilSensor.isTooDry() && waterLevel != "LOW")
+    if (soilSensor.isTooDry(DRY_THRESHOLD) && waterLevel != "LOW")
     {
         valve.open();
     }
-    else if (soilSensor.isTooWet())
+    else if (soilSensor.isTooWet(WET_THRESHOLD))
     {
         valve.close();
     }

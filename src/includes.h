@@ -2,9 +2,7 @@
 #define INCLUDES_H
 
 // CONFIG FILES
-#include "pin_config.h"
-#include "db_config.h"
-#include "wifi_config.h"
+#include "config.h"
 
 // Include necessary libraries
 #include <Arduino.h>

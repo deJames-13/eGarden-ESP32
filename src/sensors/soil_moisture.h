@@ -7,8 +7,8 @@ public:
     SoilMoisture(int pin);
     void begin();
     int getMoisture();
-    bool isTooDry();
-    bool isTooWet();
+    bool isTooDry(int threshold);
+    bool isTooWet(int threshold);
 
 private:
     int pin;

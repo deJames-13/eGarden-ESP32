@@ -4,7 +4,6 @@
 
 #include <Adafruit_Sensor.h>
 #include <DHT.h>
-#include "pin_config.h"
 
 class DHTSENSOR
 {

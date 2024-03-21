@@ -1,9 +1,14 @@
 #ifndef OLED_H
 #define OLED_H
 
-#include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <Adafruit_GFX.h>
 #include <Wire.h>
+#include <Fonts/FreeMonoBold9pt7b.h>
+#include <Fonts/FreeMono9pt7b.h>
+#include "sensors/dht_sensor.h"
+#include "sensors/soil_moisture.h"
+#include "sensors/water_level.h"
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 32
@@ -19,10 +24,9 @@ public:
     void begin();
     void clearDisplay();
     void updateDisplay();
-    void displayTemperature(float temperature);
-    void displayHumidity(float humidity);
-    void displayMoisture(int moisture);
-    void displayWaterStatus(const String &waterLevel, int sensorValue);
+    void displayDHT(DHTSENSOR &dhtSensor);
+    void displayMoisture(SoilMoisture &soilSensor);
+    void displayWater(WaterLevel &waterSensor);
     void displayText(String text);
 
 private:

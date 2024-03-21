@@ -4,27 +4,19 @@
 class WaterLevel
 {
 public:
-    enum Level
-    {
-        LOW_LEVEL,
-        MEDIUM_LEVEL,
-        HIGH_LEVEL
-    };
-
-    WaterLevel(int pin);
+    WaterLevel(int pin, int lowThreshold, int mediumThreshold, int highThreshold);
     void begin();
-    String getWaterLevel();
     int getSensorValue();
+    String getWaterLevel(int value);
     bool isEmptyOrLow();
 
 private:
-    String waterLevel;
     int pin;
+    String waterLevel;
+    int value;
+    int lowThreshold = 100;
+    int mediumThreshold = 300;
+    int highThreshold = 600;
 };
-
-// Threshold values
-#define LOW_THRESHOLD 100    // FIXME:  Adjust as needed
-#define MEDIUM_THRESHOLD 300 // FIXME:  Adjust as needed
-#define HIGH_THRESHOLD 600   // FIXME:  Adjust as needed
 
 #endif
