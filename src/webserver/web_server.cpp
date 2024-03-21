@@ -11,18 +11,23 @@ void MyWebServer::begin()
         Serial.println("An error has occurred while mounting SPIFFS");
         return;
     }
-    server.begin();
 
+    server.begin();
     // MAIN
-    server.on("/", HTTP_GET, [this]()
-              { server.send(200, "text/html", readIndexFile()); });
-    server.on("/data", HTTP_GET, [this]()
-              { server.send(200, "application/json", generateJSON()); });
+    htmlContent = readIndexFile("/index.html");
+    server.on("/", HTTP_GET, [this](AsyncWebServerRequest *request)
+              { request->send(200, "text/html", this->htmlContent); });
+    server.on("/index.js", HTTP_GET, [this](AsyncWebServerRequest *request)
+              { request->send(200, "text/javascript", this->readIndexFile("/index.js")); });
+    server.on("/plain-text", HTTP_GET, [this](AsyncWebServerRequest *request)
+              { request->send(200, "text/html", this->generateHTML()); });
+    server.on("/data", HTTP_GET, [this](AsyncWebServerRequest *request)
+              { request->send(200, "application/json", this->generateJSON()); });
 }
 
 void MyWebServer::handleClient()
 {
-    server.handleClient();
+    // server.handleClient();
 }
 
 void MyWebServer::updateSensorData(float temperature, float humidity, int moisture, const String &waterLevelStr, int waterLevelValue)
@@ -32,6 +37,7 @@ void MyWebServer::updateSensorData(float temperature, float humidity, int moistu
     moist = moisture;
     waterLevel = waterLevelStr;
     water = waterLevelValue;
+    htmlContent = readIndexFile("/index.html");
 }
 
 String MyWebServer::generateHTML()
@@ -45,18 +51,25 @@ String MyWebServer::generateHTML()
     html += "</body></html>";
     return html;
 }
-String MyWebServer::readIndexFile()
+
+String MyWebServer::readIndexFile(const String &path)
 {
-    File indexFile = SPIFFS.open("/index.html");
-    if (!indexFile)
+    File file = SPIFFS.open(path);
+    if (!file)
     {
-        Serial.println("Failed to open index.html file");
+        Serial.println("Failed to open file: " + path);
         return "";
     }
-    String html = indexFile.readString();
-    indexFile.close();
-    return html;
+    String content = file.readString();
+    file.close();
+    content.replace("{temperature}", String(temp));
+    content.replace("{humidity}", String(hum));
+    content.replace("{moisture}", String(moist));
+    content.replace("{waterLevelStr}", waterLevel);
+    content.replace("{waterLevelValue}", String(water));
+    return content;
 }
+
 String MyWebServer::generateJSON()
 {
     JsonDocument doc;

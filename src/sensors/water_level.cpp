@@ -25,9 +25,13 @@ String WaterLevel::getWaterLevel(int value)
     {
         waterLevel = "MEDIUM";
     }
-    else
+    else if (value > 0)
     {
         waterLevel = "LOW";
+    }
+    else
+    {
+        waterLevel = "EMPTY";
     }
     return waterLevel;
 }
@@ -41,7 +45,7 @@ int WaterLevel::getSensorValue()
 bool WaterLevel::isEmptyOrLow()
 {
     String waterLevel = getWaterLevel(value);
-    if (waterLevel == "Low" || waterLevel == "Empty")
+    if (waterLevel == "LOW" || waterLevel == "EMPTY")
     {
         return true;
     }

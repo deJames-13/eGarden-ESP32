@@ -35,6 +35,8 @@ String waterLevel = "";
 int buttonPin = 4;
 int buttonState = 0;
 
+void printSensorData();
+
 void setup()
 {
     // COMMENT OUT ON UR OWN RISK - Panic error if not began properly
@@ -73,9 +75,19 @@ void loop()
     // #########################################################
 
     // #########################################################
+    // WEB SERVER           FIXME: Test web server
+    // Update sensor data on web server
+    // #########################################################
+    webServer.updateSensorData(temperature, humidity, moisture, waterLevel, waterValue);
+    // HANDLE CLIENT SERVER
+    webServer.handleClient();
+    // #########################################################
+
+    // #########################################################
     // OLED INFO DISPLAY    FIXME: Adjsut Display
     // Update display with sensor data
     // #########################################################
+    printSensorData();
     myOled.displayDHT(dhtSensor);
     myOled.displayMoisture(soilSensor);
     myOled.displayWater(waterSensor);
@@ -87,15 +99,6 @@ void loop()
     // handleBuzzer();
     // handleWatering(waterLevel);
     // handleFan(fan1);
-    // #########################################################
-
-    // #########################################################
-    // WEB SERVER           FIXME: Test web server
-    // Update sensor data on web server
-    // #########################################################
-    // webServer.updateSensorData(temperature, humidity, moisture, waterLevel, waterValue);
-    // HANDLE CLIENT SERVER
-    webServer.handleClient();
     // #########################################################
 
     // TESTING
@@ -159,4 +162,22 @@ void handleButtonClick()
     {
         fan1.turnOff();
     }
+}
+
+// #########################################################
+// SERIAL PRINT
+// #########################################################
+void printSensorData()
+{
+
+    Serial.println("\n\n#########################################################");
+    Serial.println("SENSOR DATA:");
+    Serial.println("#########################################################");
+    Serial.println("Temperature: \t\t" + String(temperature) + "°C");
+    Serial.println("Humidity: \t\t" + String(humidity) + "%");
+    Serial.println("Soil Moisture: \t\t" + String(moisture));
+    Serial.println("Water Value: \t\t" + String(waterValue));
+    Serial.println("Water Level: \t\t" + waterLevel);
+    Serial.println("#########################################################");
+    Serial.println();
 }

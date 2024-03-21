@@ -1,7 +1,9 @@
 #ifndef MYWEBSERVER_H
 #define MYWEBSERVER_H
 
-#include <WebServer.h>
+#include <ESPAsyncWebServer.h> // ASYNC WEB SERVER
+#include <AsyncTCP.h>          // ASYNC TCP
+
 #include <SPIFFS.h> // FILE SYSTEM ACCESS
 #include <ArduinoJson.h>
 
@@ -14,7 +16,8 @@ public:
     void updateSensorData(float temperature, float humidity, int moisture, const String &waterLevelStr, int waterLevelValue);
 
 private:
-    WebServer server;
+    AsyncWebServer server;
+    String htmlContent;
     float temp;
     float hum;
     int moist;
@@ -22,7 +25,7 @@ private:
     String waterLevel;
     String generateHTML();
     String generateJSON();
-    String readIndexFile(); // READ INDEX.HTML FILE
+    String readIndexFile(const String &path); // READ INDEX.HTML FILE
 };
 
 #endif

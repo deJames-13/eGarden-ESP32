@@ -1,3 +1,4 @@
+
 // index.js
 // Get the context of the canvas elements
 var temperatureCtx = document.getElementById('temperatureChart').getContext('2d');
@@ -16,7 +17,7 @@ var temperatureChart = new Chart(temperatureCtx, {
             data: [],
             borderColor: 'rgba(255, 99, 132, 1)',
             fill: true,
-            backgroundColor: 'rgba(255, 99, 132, 0.2)', 
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
             borderWidth: 3
         }]
     },
@@ -93,11 +94,11 @@ var waterValueChart = new Chart(waterValueCtx, {
     }
 });
 
-var waterLevelCounts = { LOW: 0, MEDIUM: 0, HIGH: 0 };
+var waterLevelCounts = { LOW: 0, MEDIUM: 0, HIGH: 0, EMPTY: 0 };
 var waterLevelChart = new Chart(waterLevelCtx, {
     type: 'doughnut',
     data: {
-        labels: ['LOW', 'MEDIUM', 'HIGH'],
+        labels: ['LOW', 'MEDIUM', 'HIGH', 'EMPTY'],
         datasets: [{
             data: [waterLevelCounts.LOW, waterLevelCounts.MEDIUM, waterLevelCounts.HIGH],
             fill: true,
@@ -146,7 +147,7 @@ function mapWaterLevel(value) {
         case 2:
             return 'HIGH';
         default:
-            return 'N/A';
+            return 'EMPTY';
     }
 }
 
@@ -167,13 +168,13 @@ function fakeFetch() {
     document.getElementById('temperature').innerText = data.temperature.toFixed(2);
     document.getElementById('humidity').innerText = data.humidity.toFixed(2);
     document.getElementById('moisture').innerText = data.moisture.toFixed(2);
-    document.getElementById('waterLevel').innerText = mapWaterLevel(data.waterLevel);
+    document.getElementById('waterLevel').innerText = data.waterLevel;
     document.getElementById('waterValue').innerText = data.waterValue.toFixed(2);
 
     // Update the water level count
-    waterLevelCounts[mapWaterLevel(data.waterLevel)]++;
+    waterLevelCounts[data.waterLevel]++;
 
-    var now = new Date().toLocaleTimeString(); 
+    var now = new Date().toLocaleTimeString();
     temperatureChart.data.labels.push(now);
     temperatureChart.data.datasets[0].data.push(data.temperature.toFixed(2));
     humidityChart.data.labels.push(now);
@@ -184,7 +185,6 @@ function fakeFetch() {
     waterValueChart.data.datasets[0].data.push(data.waterValue.toFixed(2));
 
     // Update the pie chart data
-    waterLevelChart.data.datasets[0].data = [waterLevelCounts.LOW, waterLevelCounts.MEDIUM, waterLevelCounts.HIGH];
 
     temperatureChart.update();
     humidityChart.update();
@@ -202,13 +202,13 @@ function fetchDataAndUpdate() {
             document.getElementById('temperature').innerText = data.temperature.toFixed(2);
             document.getElementById('humidity').innerText = data.humidity.toFixed(2);
             document.getElementById('moisture').innerText = data.moisture.toFixed(2);
-            document.getElementById('waterLevel').innerText = mapWaterLevel(data.waterLevel);
+            document.getElementById('waterLevel').innerText = data.waterLevel;
             document.getElementById('waterValue').innerText = data.waterValue.toFixed(2);
 
             // Update the water level count
-            waterLevelCounts[mapWaterLevel(data.waterLevel)]++;
+            waterLevelCounts[data.waterLevel]++;
 
-            var now = new Date().toLocaleTimeString(); 
+            var now = new Date().toLocaleTimeString();
             temperatureChart.data.labels.push(now);
             temperatureChart.data.datasets[0].data.push(data.temperature.toFixed(2));
             humidityChart.data.labels.push(now);
@@ -217,24 +217,42 @@ function fetchDataAndUpdate() {
             moistureChart.data.datasets[0].data.push(data.moisture.toFixed(2));
             waterValueChart.data.labels.push(now);
             waterValueChart.data.datasets[0].data.push(data.waterValue.toFixed(2));
+            waterLevelChart.data.datasets[0].data = [waterLevelCounts.LOW, waterLevelCounts.MEDIUM, waterLevelCounts.HIGH, waterLevelCounts.EMPTY];
 
-            // Update the pie chart data
-            waterLevelChart.data.datasets[0].data = [waterLevelCounts.LOW, waterLevelCounts.MEDIUM, waterLevelCounts.HIGH];
+
+            // If the data array length exceeds 50, remove the oldest data point
+            if (temperatureChart.data.labels.length > 50) {
+                temperatureChart.data.labels.shift();
+                temperatureChart.data.datasets[0].data.shift();
+            }
+            if (humidityChart.data.labels.length > 50) {
+                humidityChart.data.labels.shift();
+                humidityChart.data.datasets[0].data.shift();
+            }
+            if (moistureChart.data.labels.length > 50) {
+                moistureChart.data.labels.shift();
+                moistureChart.data.datasets[0].data.shift();
+            }
+            if (waterValueChart.data.labels.length > 50) {
+                waterValueChart.data.labels.shift();
+                waterValueChart.data.datasets[0].data.shift();
+            }
 
             temperatureChart.update();
             humidityChart.update();
             moistureChart.update();
             waterValueChart.update();
             waterLevelChart.update();
+
         })
-        .catch(error => {  
-        if (error.name !== 'SyntaxError') {
-            console.error(error);
-        }
+        .catch(error => {
+            if (error.name !== 'SyntaxError') {
+                console.error(error);
+            }
         });
 }
 
 
-// fetchDataAndUpdate();
-fakeFetch();
-setInterval(fakeFetch, 2000);
+fetchDataAndUpdate();
+// fakeFetch();
+setInterval(fetchDataAndUpdate, 1300);
