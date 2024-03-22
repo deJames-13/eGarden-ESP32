@@ -23,6 +23,7 @@
 #include "display/oled.h"
 
 // WEB SERVICE
+#include "bluetooth/bluetooth_manager.h"
 #include "webserver/web_server.h"
 #include "webserver/network_manager.h"
 #include "webserver/database_manager.h"

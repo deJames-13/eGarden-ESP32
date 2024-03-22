@@ -3,8 +3,9 @@
 // WEB
 OLED myOled;
 MyWebServer webServer;
-NetworkManager networkManager; // FIXME: Network
-DatabaseManager dbManager;     // FIXME: Database
+NetworkManager networkManager;               // FIXME: Network
+DatabaseManager dbManager;                   // FIXME: Database
+BluetoothManager myBluetooth("SPBluetooth"); // FIXME: Bluetooth too much memory
 
 // SENSORS
 DHTSENSOR dhtSensor(DHT_PIN, DHTTYPE);
@@ -32,7 +33,7 @@ int moisture = 0;
 int waterValue = 0;
 String waterLevel = "";
 
-int buttonPin = 4;
+int buttonPin = 32;
 int buttonState = 0;
 
 void printSensorData();
@@ -55,7 +56,7 @@ void setup()
     webServer.begin();
 
     // TESTS
-    // pinMode(buttonPin, INPUT_PULLUP);
+    pinMode(buttonPin, INPUT_PULLUP);
 }
 
 void loop()
@@ -87,10 +88,11 @@ void loop()
     // OLED INFO DISPLAY    FIXME: Adjsut Display
     // Update display with sensor data
     // #########################################################
-    printSensorData();
-    myOled.displayDHT(dhtSensor);
-    myOled.displayMoisture(soilSensor);
-    myOled.displayWater(waterSensor);
+    // printSensorData();
+    // myOled.displayDHT(dhtSensor);
+    // myOled.displayMoisture(soilSensor);
+    // myOled.displayWater(waterSensor);
+    myOled.clearDisplay();
 
     // #########################################################
     // OUTPUT EVENTS
@@ -102,7 +104,7 @@ void loop()
     // #########################################################
 
     // TESTING
-    // handleButtonClick();
+    handleButtonClick();
 }
 
 // #########################################################
@@ -156,11 +158,9 @@ void handleButtonClick()
     if (buttonState == HIGH)
     {
         Serial.println("clicked");
-        fan1.turnOn();
     }
     else
     {
-        fan1.turnOff();
     }
 }
 
@@ -181,3 +181,35 @@ void printSensorData()
     Serial.println("#########################################################");
     Serial.println();
 }
+
+// #########################################################
+// BLUETOOTH COMMANDS
+// #########################################################
+// void handleBluetooth()
+// {
+//     String command = myBluetooth.getCommand();
+//     if (command != "")
+//     {
+//         Serial.println("BLuetoothCommand: " + command);
+//         if (command == "water_on")
+//         {
+//             valve.open();
+//         }
+//         else if (command == "water_off")
+//         {
+//             valve.close();
+//         }
+//         else if (command == "fan_on")
+//         {
+//             fan1.turnOn();
+//         }
+//         else if (command == "fan_off")
+//         {
+//             fan1.turnOff();
+//         }
+//         else if (command == "buzzer_on")
+//         {
+//             buzzer.buzzOnce();
+//         }
+//     }
+// }
