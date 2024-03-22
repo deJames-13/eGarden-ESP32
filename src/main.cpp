@@ -1,11 +1,9 @@
 #include "includes.h"
 
 // WEB
-OLED myOled;
 MyWebServer webServer;
-NetworkManager networkManager;               // FIXME: Network
-DatabaseManager dbManager;                   // FIXME: Database
-BluetoothManager myBluetooth("SPBluetooth"); // FIXME: Bluetooth too much memory
+NetworkManager networkManager; // FIXME: Network
+BluetoothManager myBluetooth("ESPBluetooth");
 
 // SENSORS
 DHTSENSOR dhtSensor(DHT_PIN, DHTTYPE);
@@ -13,6 +11,7 @@ SoilMoisture soilSensor(SOIL_MOISTURE_PIN);
 WaterLevel waterSensor(WATER_LEVEL_PIN, LOW_THRESHOLD, MEDIUM_THRESHOLD, HIGH_THRESHOLD);
 
 // OUTPUT
+OLED myOled;
 Buzzer buzzer(BUZZER_PIN);
 Fan fan1(RELAY_PIN_FAN1);
 Fan fan2(RELAY_PIN_FAN2);
