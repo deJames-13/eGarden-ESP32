@@ -2,7 +2,7 @@
 
 // WEB
 MyWebServer webServer;
-NetworkManager networkManager; // FIXME: Network
+NetworkManager networkManager;
 BluetoothManager myBluetooth("ESPBluetooth");
 
 // SENSORS
@@ -53,6 +53,7 @@ void setup()
     myOled.begin();
     networkManager.connectToWiFi(WIFI_SSID, WIFI_PASSWORD);
     webServer.begin();
+    myBluetooth.begin();
 
     // TESTS
     pinMode(buttonPin, INPUT_PULLUP);
@@ -61,8 +62,6 @@ void setup()
 void loop()
 {
     delay(1000);
-    // Serial.println("looping");
-
     // #########################################################
     // SENSOR INPUTS
     // #########################################################
@@ -87,23 +86,21 @@ void loop()
     // OLED INFO DISPLAY    FIXME: Adjsut Display
     // Update display with sensor data
     // #########################################################
-    // printSensorData();
-    // myOled.displayDHT(dhtSensor);
-    // myOled.displayMoisture(soilSensor);
-    // myOled.displayWater(waterSensor);
-    myOled.clearDisplay();
+    printSensorData();
+    myOled.displayDHT(temperature, humidity);
+    myOled.displayMoisture(moisture);
+    myOled.displayWater(waterValue, waterLevel);
 
     // #########################################################
     // OUTPUT EVENTS
     // Update what will happen to output components: buzzer, fan, valve
     // #########################################################
-    // handleBuzzer();
-    // handleWatering(waterLevel);
-    // handleFan(fan1);
-    // #########################################################
+    handleBuzzer();
+    handleWatering(waterLevel);
+    handleFan(fan1);
+    handleFan(fan2);
 
-    // TESTING
-    handleButtonClick();
+    // #########################################################
 }
 
 // #########################################################
@@ -112,7 +109,6 @@ void loop()
 
 void handleWatering(String waterLevel)
 {
-    // FIXME: TEST LOGIC
     if (soilSensor.isTooDry(DRY_THRESHOLD) && waterLevel != "LOW")
     {
         valve.open();
@@ -125,8 +121,7 @@ void handleWatering(String waterLevel)
 
 void handleFan(Fan fan)
 {
-    // FIXME: TEST LOGIC
-    const float temperatureThreshold = 30;
+    const float temperatureThreshold = 35;
     if (dhtSensor.isHot(temperatureThreshold))
     {
         fan.turnOn();
@@ -139,7 +134,6 @@ void handleFan(Fan fan)
 
 void handleBuzzer()
 {
-    // FIXME: TEST LOGIC
     if (waterSensor.isEmptyOrLow())
     {
         buzzer.buzzOnce();
@@ -156,7 +150,6 @@ void handleButtonClick()
     buttonState = digitalRead(buttonPin);
     if (buttonState == HIGH)
     {
-        Serial.println("clicked");
     }
     else
     {
@@ -184,31 +177,31 @@ void printSensorData()
 // #########################################################
 // BLUETOOTH COMMANDS
 // #########################################################
-// void handleBluetooth()
-// {
-//     String command = myBluetooth.getCommand();
-//     if (command != "")
-//     {
-//         Serial.println("BLuetoothCommand: " + command);
-//         if (command == "water_on")
-//         {
-//             valve.open();
-//         }
-//         else if (command == "water_off")
-//         {
-//             valve.close();
-//         }
-//         else if (command == "fan_on")
-//         {
-//             fan1.turnOn();
-//         }
-//         else if (command == "fan_off")
-//         {
-//             fan1.turnOff();
-//         }
-//         else if (command == "buzzer_on")
-//         {
-//             buzzer.buzzOnce();
-//         }
-//     }
-// }
+void handleBluetooth()
+{
+    String command = myBluetooth.getCommand();
+    if (command != "")
+    {
+        Serial.println("BLuetoothCommand: " + command);
+        if (command == "water_on")
+        {
+            valve.open();
+        }
+        else if (command == "water_off")
+        {
+            valve.close();
+        }
+        else if (command == "fan_on")
+        {
+            fan1.turnOn();
+        }
+        else if (command == "fan_off")
+        {
+            fan1.turnOff();
+        }
+        else if (command == "buzzer_on")
+        {
+            buzzer.buzzOnce();
+        }
+    }
+}

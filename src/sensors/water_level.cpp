@@ -1,4 +1,3 @@
-// FIXME: Check code compatibility and errors
 #include <Arduino.h>
 #include "water_level.h"
 

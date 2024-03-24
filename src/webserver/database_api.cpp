@@ -1,7 +1,6 @@
 #include "database_api.h"
 
 DatabaseApi::DatabaseApi() {}
-
 void DatabaseApi::begin(const String &serverUrl)
 {
     this->serverUrl = serverUrl;

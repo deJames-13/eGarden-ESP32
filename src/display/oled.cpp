@@ -32,12 +32,12 @@ void OLED::displayText(String text)
     this->updateDisplay();
 }
 
-void OLED::displayDHT(DHTSENSOR &dhtSensor)
+void OLED::displayDHT(int temperature, int humidity)
 {
     this->clearDisplay();
     display.setFont(&FreeMonoBold9pt7b);
     display.println("Temperature");
-    display.println(String(dhtSensor.getTemperature()) + " C");
+    display.println(String(temperature) + " C");
     this->updateDisplay();
 
     delay(3000);
@@ -45,30 +45,29 @@ void OLED::displayDHT(DHTSENSOR &dhtSensor)
     this->clearDisplay();
     display.setFont(&FreeMonoBold9pt7b);
     display.println("Humidity");
-    display.println(String(dhtSensor.getHumidity()));
+    display.println(String(humidity));
     this->updateDisplay();
 
     delay(3000);
 }
 
-void OLED::displayMoisture(SoilMoisture &soilSensor)
+void OLED::displayMoisture(int moisture)
 {
     this->clearDisplay();
     display.setFont(&FreeMonoBold9pt7b);
     display.println("Moisture");
-    display.println(String(soilSensor.getMoisture()));
+    display.println(String(moisture));
     this->updateDisplay();
 
     delay(3000);
 }
 
-void OLED::displayWater(WaterLevel &waterSensor)
+void OLED::displayWater(int waterValue, String waterLevel)
 {
-    int val = waterSensor.getSensorValue();
     this->clearDisplay();
     display.setFont(&FreeMonoBold9pt7b);
     display.println("Water Value");
-    display.println(String(val) + " (" + String(waterSensor.getWaterLevel(val)) + ")");
+    display.println(String(waterValue) + " (" + waterLevel + ")");
     this->updateDisplay();
     delay(3000);
 }
