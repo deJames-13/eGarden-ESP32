@@ -40,7 +40,7 @@ void OLED::displayDHT(int temperature, int humidity)
     display.println(String(temperature) + " C");
     this->updateDisplay();
 
-    delay(3000);
+    delay(1500);
 
     this->clearDisplay();
     display.setFont(&FreeMonoBold9pt7b);
@@ -48,7 +48,7 @@ void OLED::displayDHT(int temperature, int humidity)
     display.println(String(humidity));
     this->updateDisplay();
 
-    delay(3000);
+    delay(1500);
 }
 
 void OLED::displayMoisture(int moisture)
@@ -59,7 +59,7 @@ void OLED::displayMoisture(int moisture)
     display.println(String(moisture));
     this->updateDisplay();
 
-    delay(3000);
+    delay(1500);
 }
 
 void OLED::displayWater(int waterValue, String waterLevel)
@@ -69,5 +69,5 @@ void OLED::displayWater(int waterValue, String waterLevel)
     display.println("Water Value");
     display.println(String(waterValue) + " (" + waterLevel + ")");
     this->updateDisplay();
-    delay(3000);
+    delay(1500);
 }

@@ -99,6 +99,7 @@ void loop()
     handleWatering(waterLevel);
     handleFan(fan1);
     handleFan(fan2);
+    handleBluetooth();
 
     // #########################################################
 }
