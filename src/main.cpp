@@ -45,7 +45,8 @@ void setup()
     soilSensor.begin();
     waterSensor.begin();
 
-    fan1.begin();
+    pinMode(RELAY_PIN_FAN1, OUTPUT);
+    // fan1.begin();
     fan2.begin();
     buzzer.begin();
     valve.begin();
@@ -61,45 +62,54 @@ void setup()
 
 void loop()
 {
-    delay(1000);
+    delay(2000);
+    Serial.print("Fan: ");
+    digitalWrite(RELAY_PIN_FAN1, LOW);
+    Serial.println(digitalRead(RELAY_PIN_FAN1));
+
+    delay(2000);
+    Serial.print("Fan: ");
+    digitalWrite(RELAY_PIN_FAN1, HIGH);
+    Serial.println(digitalRead(RELAY_PIN_FAN1));
+
     // #########################################################
     // SENSOR INPUTS
     // #########################################################
     // FIXME: Test new DHT SENSOR
-    temperature = dhtSensor.getTemperature();
-    humidity = dhtSensor.getHumidity();
-    moisture = soilSensor.getMoisture();
-    waterValue = waterSensor.getSensorValue();
-    waterLevel = waterSensor.getWaterLevel(waterValue);
+    // temperature = dhtSensor.getTemperature();
+    // humidity = dhtSensor.getHumidity();
+    // moisture = soilSensor.getMoisture();
+    // waterValue = waterSensor.getSensorValue();
+    // waterLevel = waterSensor.getWaterLevel(waterValue);
     // #########################################################
 
     // #########################################################
     // WEB SERVER           FIXME: Test web server
     // Update sensor data on web server
     // #########################################################
-    webServer.updateSensorData(temperature, humidity, moisture, waterLevel, waterValue);
+    // webServer.updateSensorData(temperature, humidity, moisture, waterLevel, waterValue);
     // HANDLE CLIENT SERVER
-    webServer.handleClient();
+    // webServer.handleClient();
     // #########################################################
 
     // #########################################################
     // OLED INFO DISPLAY    FIXME: Adjsut Display
     // Update display with sensor data
     // #########################################################
-    printSensorData();
-    myOled.displayDHT(temperature, humidity);
-    myOled.displayMoisture(moisture);
-    myOled.displayWater(waterValue, waterLevel);
+    // printSensorData();
+    // myOled.displayDHT(temperature, humidity);
+    // myOled.displayMoisture(moisture);
+    // myOled.displayWater(waterValue, waterLevel);
 
     // #########################################################
     // OUTPUT EVENTS
     // Update what will happen to output components: buzzer, fan, valve
     // #########################################################
-    handleBuzzer();
-    handleWatering(waterLevel);
-    handleFan(fan1);
-    handleFan(fan2);
-    handleBluetooth();
+    // handleBuzzer();
+    // handleWatering(waterLevel);
+    // handleFan(fan1);
+    // handleFan(fan2);
+    // handleBluetooth();
 
     // #########################################################
 }
