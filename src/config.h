@@ -25,15 +25,15 @@
 // SENSORS
 #define DHTTYPE DHT11
 #define DHT_PIN 13
-#define SOIL_MOISTURE_PIN 36
+#define SOIL_MOISTURE_PIN 32
 #define WATER_LEVEL_PIN 39
 // OUTPUTS
-#define OLED_SDA 21        // GPIO 21 - SDA
-#define OLED_SCL 22        // GPIO 22 - SCL
-#define BUZZER_PIN 32      // GPIO 32 - TOUCH9 ADC10
-#define RELAY_PIN_VALVE 33 // GPIO 33 - TOUCH8 ADC11
-#define RELAY_PIN_FAN1 25  // GPIO 25 - DAC1
-#define RELAY_PIN_FAN2 26  // GPIO 26 - DAC1
+#define OLED_SDA 21 // GPIO 21 - SDA
+#define OLED_SCL 22 // GPIO 22 - SCL
+#define BUZZER_PIN 26
+#define RELAY_PIN_VALVE 33
+#define RELAY_PIN_FAN1 25
+// #define RELAY_PIN_FAN2 25
 
 // Moisture Threshold values
 #define DRY_THRESHOLD 2000 // FIXME:  Adjust as needed
@@ -59,8 +59,8 @@
 // WIFI CONFIGURATION
 // ##########################################################################
 // Replace "YourSSID" and "YourPassword" with your actual Wi-Fi credentials
-#define WIFI_SSID "sp"
-#define WIFI_PASSWORD "percyfied13"
+#define WIFI_SSID "donkie"
+#define WIFI_PASSWORD "12345678"
 // ##########################################################################
 
 #endif

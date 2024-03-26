@@ -254,5 +254,6 @@ function fetchDataAndUpdate() {
 
 
 fetchDataAndUpdate();
-// fakeFetch();
 setInterval(fetchDataAndUpdate, 1300);
+// fakeFetch();
+// setInterval(fakeFetch, 1300);

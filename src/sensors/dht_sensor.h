@@ -15,7 +15,7 @@ public:
     float getFarenheit();
     float getHeatIndex();
     float getFarenheitIndex();
-    bool isHot(float temperatureThreshold);
+    bool isHot(float temperatureThreshold, float temp);
 
 private:
     DHT dht;

@@ -15,3 +15,8 @@ String BluetoothManager::getCommand()
     }
     return "";
 };
+
+void BluetoothManager::sendData(String data)
+{
+    blues.println(data);
+}

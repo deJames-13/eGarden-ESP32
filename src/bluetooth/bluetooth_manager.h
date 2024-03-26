@@ -11,6 +11,7 @@ class BluetoothManager
 public:
     BluetoothManager(String name);
     void begin();
+    void sendData(String data);
     String getCommand();
 
 private:

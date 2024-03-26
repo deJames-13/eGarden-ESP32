@@ -24,7 +24,7 @@ public:
     void begin();
     void clearDisplay();
     void updateDisplay();
-    void displayDHT(int temperature, int humidity);
+    void displayDHT(float temperature, int humidity);
     void displayMoisture(int moisture);
     void displayWater(int waterValue, String waterLevel);
     void displayText(String text);

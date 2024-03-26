@@ -35,7 +35,11 @@ float DHTSENSOR::getFarenheitIndex()
     return dht.computeHeatIndex(farenheit, humidity, false);
 }
 
-bool DHTSENSOR::isHot(float temperatureThreshold)
+bool DHTSENSOR::isHot(float temperatureThreshold, float temp)
 {
-    return (temperature > temperatureThreshold);
+    if (temp > temperatureThreshold)
+    {
+        return true;
+    }
+    return false;
 }

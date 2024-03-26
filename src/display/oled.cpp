@@ -32,12 +32,12 @@ void OLED::displayText(String text)
     this->updateDisplay();
 }
 
-void OLED::displayDHT(int temperature, int humidity)
+void OLED::displayDHT(float temperature, int humidity)
 {
     this->clearDisplay();
     display.setFont(&FreeMonoBold9pt7b);
     display.println("Temperature");
-    display.println(String(temperature) + " C");
+    display.println(String(temperature, 2) + " C");
     this->updateDisplay();
 
     delay(1500);

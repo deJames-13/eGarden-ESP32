@@ -14,13 +14,13 @@ WaterLevel waterSensor(WATER_LEVEL_PIN, LOW_THRESHOLD, MEDIUM_THRESHOLD, HIGH_TH
 OLED myOled;
 Buzzer buzzer(BUZZER_PIN);
 Fan fan1(RELAY_PIN_FAN1);
-Fan fan2(RELAY_PIN_FAN2);
 WaterValve valve(RELAY_PIN_VALVE);
 
 // ACTIONS
 void handleWatering(String waterLevel);
-void handleFan(Fan fan);
+void handleFan();
 void handleBuzzer();
+void handleBluetooth(BluetoothManager &blues);
 
 // TESTS
 void handleButtonClick();
@@ -45,10 +45,10 @@ void setup()
     soilSensor.begin();
     waterSensor.begin();
 
-    pinMode(RELAY_PIN_FAN1, OUTPUT);
-    // fan1.begin();
-    fan2.begin();
     buzzer.begin();
+    pinMode(RELAY_PIN_FAN1, OUTPUT);
+    digitalWrite(RELAY_PIN_FAN1, LOW);
+
     valve.begin();
 
     myOled.begin();
@@ -57,61 +57,64 @@ void setup()
     myBluetooth.begin();
 
     // TESTS
-    pinMode(buttonPin, INPUT_PULLUP);
+    // pinMode(buttonPin, INPUT_PULLUP);
 }
 
 void loop()
 {
     delay(2000);
-    Serial.print("Fan: ");
-    digitalWrite(RELAY_PIN_FAN1, LOW);
-    Serial.println(digitalRead(RELAY_PIN_FAN1));
-
-    delay(2000);
-    Serial.print("Fan: ");
-    digitalWrite(RELAY_PIN_FAN1, HIGH);
-    Serial.println(digitalRead(RELAY_PIN_FAN1));
 
     // #########################################################
     // SENSOR INPUTS
     // #########################################################
     // FIXME: Test new DHT SENSOR
-    // temperature = dhtSensor.getTemperature();
-    // humidity = dhtSensor.getHumidity();
-    // moisture = soilSensor.getMoisture();
-    // waterValue = waterSensor.getSensorValue();
-    // waterLevel = waterSensor.getWaterLevel(waterValue);
+    temperature = dhtSensor.getTemperature();
+    humidity = dhtSensor.getHumidity();
+    moisture = soilSensor.getMoisture();
+    waterValue = waterSensor.getSensorValue();
+    waterLevel = waterSensor.getWaterLevel(waterValue);
     // #########################################################
 
     // #########################################################
     // WEB SERVER           FIXME: Test web server
     // Update sensor data on web server
     // #########################################################
-    // webServer.updateSensorData(temperature, humidity, moisture, waterLevel, waterValue);
+    webServer.updateSensorData(temperature, humidity, moisture, waterLevel, waterValue);
     // HANDLE CLIENT SERVER
-    // webServer.handleClient();
+    webServer.handleClient();
     // #########################################################
-
-    // #########################################################
-    // OLED INFO DISPLAY    FIXME: Adjsut Display
-    // Update display with sensor data
-    // #########################################################
-    // printSensorData();
-    // myOled.displayDHT(temperature, humidity);
-    // myOled.displayMoisture(moisture);
-    // myOled.displayWater(waterValue, waterLevel);
 
     // #########################################################
     // OUTPUT EVENTS
     // Update what will happen to output components: buzzer, fan, valve
     // #########################################################
-    // handleBuzzer();
-    // handleWatering(waterLevel);
-    // handleFan(fan1);
-    // handleFan(fan2);
-    // handleBluetooth();
+    handleBuzzer();
+    handleWatering(waterLevel);
+    digitalWrite(RELAY_PIN_FAN1, LOW);
+    const float temperatureThreshold = 30;
+    if (temperature > temperatureThreshold)
+    {
+        Serial.println("FAN: OPENING");
+        digitalWrite(RELAY_PIN_FAN1, LOW);
+        delay(5000);
+    }
+    else
+    {
+        Serial.println("FAN: OPENING");
+        digitalWrite(RELAY_PIN_FAN1, HIGH);
+    }
+    handleBluetooth(myBluetooth);
 
     // #########################################################
+
+    // #########################################################
+    // OLED INFO DISPLAY
+    // Update display with sensor data
+    // #########################################################
+    printSensorData();
+    myOled.displayDHT(temperature, humidity);
+    myOled.displayMoisture(moisture);
+    myOled.displayWater(waterValue, waterLevel);
 }
 
 // #########################################################
@@ -130,16 +133,19 @@ void handleWatering(String waterLevel)
     }
 }
 
-void handleFan(Fan fan)
+void handleFan()
 {
-    const float temperatureThreshold = 35;
-    if (dhtSensor.isHot(temperatureThreshold))
+    const float temperatureThreshold = 37;
+    bool isHot = dhtSensor.isHot(temperatureThreshold, temperature);
+    if (isHot)
     {
-        fan.turnOn();
+        Serial.println("Turning on fan");
+        digitalWrite(RELAY_PIN_FAN1, HIGH);
     }
     else
     {
-        fan.turnOff();
+        digitalWrite(RELAY_PIN_FAN1, LOW);
+        Serial.println("Turning off fan");
     }
 }
 
@@ -172,7 +178,6 @@ void handleButtonClick()
 // #########################################################
 void printSensorData()
 {
-
     Serial.println("\n\n#########################################################");
     Serial.println("SENSOR DATA:");
     Serial.println("#########################################################");
@@ -188,12 +193,15 @@ void printSensorData()
 // #########################################################
 // BLUETOOTH COMMANDS
 // #########################################################
-void handleBluetooth()
+void handleBluetooth(BluetoothManager &blues)
 {
-    String command = myBluetooth.getCommand();
+    String data = "Temperature: " + String(temperature) + " C\n" + "Humidity: " + String(humidity) + " %\n" + "Soil Moisture: " + String(moisture) + "\n" + "Water Value: " + String(waterValue) + "\n" + "Water Level: " + waterLevel;
+    blues.sendData(data);
+    String command = blues.getCommand();
     if (command != "")
     {
-        Serial.println("BLuetoothCommand: " + command);
+        Serial.print("BLuetoothCommand: ");
+        Serial.println(command);
         if (command == "water_on")
         {
             valve.open();
@@ -204,15 +212,19 @@ void handleBluetooth()
         }
         else if (command == "fan_on")
         {
-            fan1.turnOn();
+            digitalWrite(RELAY_PIN_FAN1, LOW);
         }
         else if (command == "fan_off")
         {
-            fan1.turnOff();
+            digitalWrite(RELAY_PIN_FAN1, HIGH);
         }
         else if (command == "buzzer_on")
         {
             buzzer.buzzOnce();
+        }
+        else if (command == "buzzer_off")
+        {
+            buzzer.setBuzzState(false);
         }
     }
 }
